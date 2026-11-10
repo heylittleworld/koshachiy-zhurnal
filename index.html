@@ -282,6 +282,19 @@ textarea.in{min-height:80px;resize:vertical}
 .cd-add:before{display:none}
 .cd-add .cd-ic{opacity:.55}
 .cd-plus{display:inline-block;margin-top:14px;font-size:13.5px;font-weight:600;color:var(--acc)}
+.cd-one{flex:none;max-width:none;width:100%;display:block}
+.avs{display:inline-flex}
+.avs .cd-av+.cd-av{margin-left:-9px}
+.cd-rows{margin-top:10px;background:var(--card);border:1px solid var(--cb);box-shadow:var(--sh2);border-radius:22px;padding:4px 14px}
+.cd-row{display:flex;align-items:center;gap:10px;padding:11px 0;border:none;border-top:1px solid var(--soft);background:none;width:100%;text-align:left;font:inherit;color:var(--ink)}
+.cd-row:first-child{border-top:none}
+.cd-ri{width:34px;height:34px;border-radius:12px;background:var(--soft);display:flex;align-items:center;justify-content:center;font-size:17px;flex:none}
+.cd-row .t{flex:1;min-width:0;font-size:14px}
+.cd-row .t b{font-weight:600;display:block}
+.cd-row .t span{font-size:12px;color:var(--muted)}
+.cd-rd{font-size:13px;font-weight:600;color:var(--muted);white-space:nowrap}
+.cd-miss .cd-ri{opacity:.6}
+.cd-row .cd-plus{margin:0;font-size:18px}
 .ro{color:var(--amb);font-size:13px;padding:10px 14px;border-radius:16px;margin:12px 0}
 </style>
 </head>
@@ -458,26 +471,41 @@ function celebRow(x,showName){
   var badge=a.days===0?'<span class="badge b-pink">сегодня 🎉</span>':'<span class="badge b-pink">через '+dd(a.days)+'</span>';
   return'<div class="mini-rem"><span class="ic">'+(bd?"🎂":"🏠")+(showName?'<span class="mini" style="'+faceStyle(x.c)+'">'+face(x.c)+'</span>':'')+'</span><span class="t"><b>'+title+'</b><span>'+sub+'</span></span>'+badge+'</div>';
 }
-function cdCard(x){
-  var a=x.a,bd=x.k==="bd",c=x.c,yrs=a.years,pct=Math.max(3,Math.min(100,Math.round((365-a.days)/365*100)));
-  var date=pd(a.date).toLocaleDateString("ru-RU",{day:"numeric",month:"long"});
-  var sub=bd?(yrs>0?"исполнится "+yrs+" "+plural(yrs,["год","года","лет"]):date):(yrs>0?yrs+" "+plural(yrs,["год","года","лет"])+" вместе":"первая годовщина");
-  var h='<div class="cd '+(bd?"cd-bd":"cd-home")+'"><span class="cd-ic">'+(bd?"🎂":"🏡")+'</span>'+
-    '<div class="cd-top"><span class="cd-av" style="'+faceStyle(c)+'">'+face(c)+'</span><span class="cd-name">'+esc(c.name)+'</span></div>';
-  if(a.days===0)h+='<div class="cd-num"><b>🎉</b></div><div class="cd-t">'+(bd?"Сегодня день рождения!":"Сегодня годовщина дома!")+'</div>';
-  else h+='<div class="cd-num"><b>'+a.days+'</b><span>'+plural(a.days,["день","дня","дней"])+'</span></div><div class="cd-t">'+(bd?"до дня рождения":"до годовщины дома")+'</div>';
-  h+='<div class="cd-s">'+date+' · '+esc(sub)+'</div><div class="cd-bar"><i style="width:'+pct+'%"></i></div></div>';
-  return h;
+function namesJoin(cs){var n=cs.map(function(c){return c.name});return n.length<2?n.join(""):n.slice(0,-1).join(", ")+" и "+n[n.length-1]}
+function celebGroups(list){
+  var g={},out=[];
+  celebs(list).forEach(function(x){var k=x.k+"|"+x.a.date;if(!g[k]){g[k]={k:x.k,a:x.a,cats:[],yrs:{}};out.push(g[k])}g[k].cats.push(x.c);g[k].yrs[x.a.years]=1});
+  out.forEach(function(x){var ys=Object.keys(x.yrs);x.sameYrs=ys.length===1?+ys[0]:null});
+  out.sort(function(a,b){return a.a.days-b.a.days});
+  return out;
+}
+function avStack(cs,cls){return'<span class="avs">'+cs.map(function(c){return'<span class="'+cls+'" style="'+faceStyle(c)+'">'+face(c)+'</span>'}).join("")+'</span>'}
+function celebSub(x){
+  var bd=x.k==="bd",y=x.sameYrs,date=pd(x.a.date).toLocaleDateString("ru-RU",{day:"numeric",month:"long"});
+  if(!y||y<1)return date;
+  return date+" · "+(bd?(x.cats.length>1?"исполнится по ":"исполнится ")+y+" "+plural(y,["год","года","лет"]):y+" "+plural(y,["год","года","лет"])+" вместе");
 }
 function celebCard(list){
-  var cs=celebs(list),h='<div class="cds">';
-  cs.forEach(function(x){h+=cdCard(x)});
-  if(!readOnly)list.forEach(function(c){
-    if(!c.birth)h+='<button class="cd cd-add" data-act="editcat" data-id="'+c.id+'"><span class="cd-ic">🎂</span><div class="cd-top"><span class="cd-av" style="'+faceStyle(c)+'">'+face(c)+'</span><span class="cd-name">'+esc(c.name)+'</span></div><div class="cd-t" style="margin-top:18px">Когда день рождения?</div><div class="cd-s">Укажите дату, и здесь появится отсчёт</div><span class="cd-plus">＋ Указать</span></button>';
-    if(!c.home)h+='<button class="cd cd-add" data-act="editcat" data-id="'+c.id+'"><span class="cd-ic">🏡</span><div class="cd-top"><span class="cd-av" style="'+faceStyle(c)+'">'+face(c)+'</span><span class="cd-name">'+esc(c.name)+'</span></div><div class="cd-t" style="margin-top:18px">Когда '+(c.sex==="кошка"?"появилась":"появился")+' дома?</div><div class="cd-s">Укажите дату, и здесь появится отсчёт</div><span class="cd-plus">＋ Указать</span></button>';
-  });
-  if(!cs.length&&readOnly)h+='<div class="empty">Даты пока не указаны.</div>';
-  return h+'</div>';
+  var gs=celebGroups(list),h='';
+  if(gs.length){
+    var x=gs[0],bd=x.k==="bd",d=x.a.days;
+    h+='<div class="cd cd-one '+(bd?"cd-bd":"cd-home")+'"><span class="cd-ic">'+(bd?"🎂":"🏡")+'</span>'+
+      '<div class="cd-top">'+avStack(x.cats,"cd-av")+'<span class="cd-name">'+esc(namesJoin(x.cats))+'</span></div>';
+    if(d===0)h+='<div class="cd-num"><b>🎉</b></div><div class="cd-t">'+(bd?"Сегодня день рождения!":"Сегодня годовщина дома!")+'</div>';
+    else h+='<div class="cd-num"><b>'+d+'</b><span>'+plural(d,["день","дня","дней"])+'</span></div><div class="cd-t">'+(bd?"до дня рождения":"до годовщины дома")+'</div>';
+    h+='<div class="cd-s">'+esc(celebSub(x))+'</div><div class="cd-bar"><i style="width:'+Math.max(3,Math.min(100,Math.round((365-d)/365*100)))+'%"></i></div></div>';
+  }
+  var rows='';
+  gs.slice(1).forEach(function(x){var bd=x.k==="bd";
+    rows+='<div class="cd-row"><span class="cd-ri">'+(bd?"🎂":"🏡")+'</span><span class="t"><b>'+(bd?"День рождения":"Годовщина дома")+' · '+esc(namesJoin(x.cats))+'</b><span>'+esc(celebSub(x))+'</span></span><span class="cd-rd">'+(x.a.days===0?"сегодня 🎉":x.a.days+" "+plural(x.a.days,["день","дня","дней"]))+'</span></div>'});
+  if(!readOnly){
+    var noB=list.filter(function(c){return!c.birth}),noH=list.filter(function(c){return!c.home});
+    if(noB.length)rows+='<button class="cd-row cd-miss" data-act="editcat" data-id="'+noB[0].id+'"><span class="cd-ri">🎂</span><span class="t"><b>Дата рождения: '+esc(namesJoin(noB))+'</b><span>Укажите, и появится отсчёт</span></span><span class="cd-plus">＋</span></button>';
+    if(noH.length)rows+='<button class="cd-row cd-miss" data-act="editcat" data-id="'+noH[0].id+'"><span class="cd-ri">🏡</span><span class="t"><b>Когда дома: '+esc(namesJoin(noH))+'</b><span>Укажите, и появится отсчёт</span></span><span class="cd-plus">＋</span></button>';
+  }
+  if(rows)h+='<div class="cd-rows">'+rows+'</div>';
+  if(!h)h='<div class="empty">Даты пока не указаны.</div>';
+  return h;
 }
 
 /* ---------- фото ---------- */

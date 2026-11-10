@@ -58,7 +58,7 @@ button{cursor:pointer}
 .top .in-w{max-width:576px;margin:0 auto;padding:8px 6px 0;display:flex;align-items:center;justify-content:space-between;background:none!important;border:none!important;box-shadow:none!important;-webkit-backdrop-filter:none!important;backdrop-filter:none!important}
 .top .in-w:after{display:none}
 h1{font-size:19px;font-weight:700;margin:0;letter-spacing:-.4px;display:flex;align-items:center;gap:10px}
-h1 .logo{width:34px;height:34px;border-radius:12px;background:linear-gradient(135deg,var(--acc),var(--acc2));display:inline-flex;align-items:center;justify-content:center;font-size:17px;box-shadow:inset 0 1px 0 rgba(255,255,255,.6),0 4px 12px rgba(255,107,61,.35)}
+h1 .logo,.logo{width:34px;height:34px;border-radius:12px;background:linear-gradient(135deg,var(--acc),var(--acc2));display:inline-flex;align-items:center;justify-content:center;font-size:17px;box-shadow:inset 0 1px 0 rgba(255,255,255,.6),0 4px 12px rgba(255,107,61,.35)}
 .status{font-size:12px;color:var(--muted);font-weight:500;white-space:nowrap;padding-right:4px}
 .status.err{color:var(--red)}
 .wrap{max-width:600px;margin:0 auto;padding:8px 18px 130px}
@@ -74,7 +74,7 @@ h2{font-size:20px;font-weight:700;margin:38px 4px 14px;letter-spacing:-.4px}
 .st .lb{font-size:11.5px;font-weight:500;max-width:56px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--muted)}
 .st.on .lb{color:var(--ink);font-weight:600}
 .av img,.ph img{width:100%;height:100%;object-fit:cover;display:block}
-.st .all{color:var(--ink);font-size:20px}
+.st .all{color:var(--ink);font-size:20px;background:var(--card)!important;-webkit-backdrop-filter:none!important;backdrop-filter:none!important}
 .st .plus{background:transparent;border:2px dashed var(--muted);opacity:.6;color:var(--muted);font-size:26px;font-weight:300}
 /* обложка кота */
 .hero{position:relative;border-radius:34px;overflow:hidden;margin-top:16px;aspect-ratio:4/3.3;max-height:400px;width:100%;box-shadow:0 20px 60px rgba(90,60,110,.18),0 0 0 1px rgba(255,255,255,.4)}
@@ -328,6 +328,66 @@ textarea.in{min-height:80px;resize:vertical}
 .cd-soon{position:absolute;left:14px;bottom:auto;top:-1px;transform:translateY(-40%);display:none}
 .cdm .cd-soon{display:inline-block;position:static;transform:none;font-size:11px;font-weight:700;background:rgba(255,255,255,.7);padding:3px 8px;border-radius:999px;margin-bottom:8px}
 .cdm.cd-add .cd-plus{margin-top:10px}
+/* меню */
+.top .in-w h1{flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.menu-b{width:42px;height:42px;border-radius:14px;border:1px solid var(--cb);background:var(--card);box-shadow:var(--sh2);display:flex;flex-direction:column;justify-content:center;align-items:center;gap:4px;margin-right:10px;flex:none;padding:0}
+.menu-b i{display:block;width:18px;height:2px;border-radius:2px;background:var(--ink)}
+.top .in-w>.logo{margin-right:10px}
+.drawer{position:fixed;top:0;left:0;bottom:0;width:284px;max-width:84vw;z-index:20;background:var(--g2);-webkit-backdrop-filter:blur(30px) saturate(180%);backdrop-filter:blur(30px) saturate(180%);border-right:1px solid var(--gb);box-shadow:var(--sh);transform:translateX(-105%);transition:transform .3s cubic-bezier(.2,.9,.3,1);padding:calc(18px + env(safe-area-inset-top)) 12px calc(18px + env(safe-area-inset-bottom));display:flex;flex-direction:column;gap:2px;overflow-y:auto}
+.drawer.open{transform:none}
+.dr-ov{position:fixed;inset:0;z-index:19;background:rgba(20,14,30,.22);opacity:0;pointer-events:none;transition:opacity .25s}
+.dr-ov.open{opacity:1;pointer-events:auto}
+.dr-h{display:flex;align-items:center;gap:10px;padding:4px 10px 16px;font-size:17px}
+.dr-i{display:flex;align-items:center;gap:12px;border:none;background:none;padding:12px;border-radius:14px;font:inherit;font-size:15.5px;font-weight:500;color:var(--ink);text-align:left;width:100%}
+.dr-i span{width:24px;text-align:center;font-size:18px;flex:none}
+.dr-i.on{background:var(--card);font-weight:700;box-shadow:var(--sh2)}
+.dr-i em{margin-left:auto;font-style:normal;font-size:12px;font-weight:700;background:var(--acc);color:#fff;border-radius:999px;padding:2px 8px}
+.dr-sp{flex:1;min-height:20px}
+.dr-s{font-size:14px;color:var(--muted)}
+@media(min-width:1000px){.drawer{transform:none;box-shadow:none}.dr-ov{display:none}.page{margin-left:284px}.menu-b{display:none}.fab{left:calc(50% + 142px)}}
+/* курсы */
+.mc{background:var(--card);border:1px solid var(--cb);box-shadow:var(--sh2);border-radius:24px;padding:12px 14px;margin-bottom:10px}
+.mc-h{display:flex;align-items:center;gap:12px;width:100%;border:none;background:none;padding:0;text-align:left;font:inherit;color:var(--ink)}
+.mc-h .t{flex:1;min-width:0}
+.mc-h .t b{display:block;font-size:16px;font-weight:700}
+.mc-h .t span{font-size:12.5px;color:var(--muted)}
+.mc-today{margin-top:12px;padding-top:8px;border-top:1px solid var(--soft)}
+.mc-today .k{font-size:12px;color:var(--muted);font-weight:600;margin-bottom:4px}
+.dz{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:5px 0}
+.dz-c{display:flex;align-items:center;gap:8px;font-size:14px;font-weight:500;min-width:0}
+.dz-p{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}
+.pill{border:1.5px solid transparent;background:var(--soft);border-radius:999px;padding:8px 13px;font:inherit;font-size:13px;font-weight:600;color:var(--muted)}
+.pill.on{background:var(--grnsoft);color:var(--grn)}
+.mc-bar{height:6px;border-radius:999px;background:var(--soft);margin-top:12px;overflow:hidden}
+.mc-bar i{display:block;height:100%;background:var(--grn);border-radius:999px}
+.mc-f{font-size:12px;color:var(--muted);margin-top:6px}
+.mc-done{opacity:.72}
+.cgrid{display:flex;flex-direction:column;gap:6px}
+.cg-d{background:var(--card);border-radius:16px;padding:10px 12px;border:1px solid var(--cb)}
+.cg-d.today{border-color:var(--acc);box-shadow:0 0 0 3px rgba(255,107,61,.12)}
+.cg-l{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:2px}
+.cg-l span{font-size:12px;color:var(--muted)}
+.seg2{display:flex;gap:6px}
+.seg2 button{flex:1;border:1px solid var(--cb);background:var(--card);border-radius:14px;padding:11px;font:inherit;font-weight:700;box-shadow:var(--sh2);color:var(--ink)}
+.seg2 button.on{border-color:var(--acc);background:rgba(255,107,61,.14)}
+/* документы */
+.doc{display:flex;align-items:center;gap:12px;width:100%;border:1px solid var(--cb);background:var(--card);box-shadow:var(--sh2);border-radius:20px;padding:10px;margin-bottom:8px;text-align:left;font:inherit;color:var(--ink)}
+.doc-th{width:52px;height:52px;border-radius:14px;overflow:hidden;flex:none;background:var(--soft);display:flex;align-items:center;justify-content:center}
+.doc-th img{width:100%;height:100%;object-fit:cover}
+.pdf{font-size:11px;font-weight:800;color:#fff;background:#e5484d;border-radius:6px;padding:3px 6px;letter-spacing:.5px}
+.doc .t{flex:1;min-width:0}
+.doc .t b{display:block;font-weight:600;font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.doc .t span{font-size:12.5px;color:var(--muted)}
+.doc .t small{display:block;font-size:12px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.filepick{display:flex;flex-direction:column;align-items:center;gap:4px;width:100%;border:2px dashed rgba(150,130,160,.5);border-radius:20px;background:var(--card);padding:18px;font:inherit;color:var(--ink)}
+.filepick span{font-size:26px}
+.filepick small{color:var(--muted)}
+.pdfbig{display:flex;flex-direction:column;align-items:center;gap:6px;padding:28px;background:var(--card);border-radius:22px;text-align:center}
+.pdfbig .pdf{font-size:16px;padding:6px 10px}
+.pdfbig small{color:var(--muted)}
+a.btn{text-decoration:none;display:inline-block}
+.ov,.modal{overscroll-behavior:contain}
+.modal{will-change:transform}
 .ro{color:var(--amb);font-size:13px;padding:10px 14px;border-radius:16px;margin:12px 0}
 </style>
 </head>
@@ -650,6 +710,7 @@ function dashboard(rs){
   var h='<div class="dash"><div class="sum2"><div class="d">Сводка на '+pd(t).toLocaleDateString("ru-RU",{weekday:"long",day:"numeric",month:"long"})+'</div><div class="h">'+esc(head)+(over||week?'':' ✓')+'</div><div class="p">'+esc(p)+'</div>'+
     '<div class="kp"><div><b>'+S.cats.length+'</b><span>'+plural(S.cats.length,["кот","кота","котов"])+'</span></div><div><b>'+month+'</b><span>дел за 30 дней</span></div><div><b>'+thisM+'</b><span>'+plural(thisM,["запись","записи","записей"])+' в этом месяце</span></div></div></div>';
 
+  h+=todayMeds("all");
   h+='<h2>Праздники</h2>'+celebCard(S.cats);
 
   /* сравнение котов */
@@ -703,8 +764,6 @@ function dashboard(rs){
   if(rs.length>5)h+='<button class="more" data-act="morerem">'+(ui.more?"Свернуть":"Показать все ("+rs.length+")")+'</button>';
   h+='</div>';
   if(rs.length&&!readOnly)h+='<div class="hint">Нажмите на дело, когда сделаете: откроется новая запись с тем же препаратом.</div>';
-  h+='<h2>Расходы</h2>'+expCard(null);
-  h+='<h2>Фотолента</h2>'+photoCard(null);
   return h+'</div>';
 }
 
@@ -743,53 +802,183 @@ function careView(sel){
   return h;
 }
 
+/* ---------- курсы лекарств ---------- */
+var SLOTS={1:["Приём"],2:["Утро","Вечер"],3:["Утро","День","Вечер"]};
+function courseEnd(c){return addDays(c.start,Math.max(1,+c.days||1)-1)}
+function courseState(c){var t=today();return t<c.start?"soon":t>courseEnd(c)?"done":"active"}
+function courseFor(c,sel){return sel==="all"||c.cats.indexOf(sel)>=0}
+function activeCourses(sel){return(S.courses||[]).filter(function(c){return courseFor(c,sel)&&courseState(c)==="active"})}
+function mkey(d,s,cid){return d+"|"+s+"|"+cid}
+function courseProgress(c){var tot=(+c.days||1)*(+c.per||1)*c.cats.length,done=0;for(var k in(c.marks||{}))if(c.marks[k])done++;return{done:done,tot:tot}}
+function courseDayNo(c){return diff(c.start,today())+1}
+function dosePills(c,date,cids){
+  var sl=SLOTS[c.per]||SLOTS[1],h='';
+  cids.forEach(function(cid){var k=cat(cid);if(!k)return;
+    h+='<div class="dz"><span class="dz-c"><span class="cr-av"><span style="'+faceStyle(k)+'">'+face(k)+'</span></span>'+esc(k.name)+'</span><span class="dz-p">';
+    sl.forEach(function(lbl,i){var on=c.marks&&c.marks[mkey(date,i,cid)];h+='<button class="pill'+(on?" on":"")+'" data-mark="'+c.id+'|'+date+'|'+i+'|'+cid+'">'+(on?"✓ ":"")+esc(lbl)+'</button>'});
+    h+='</span></div>'});
+  return h;
+}
+function courseCard(c,sel){
+  var st=courseState(c),p=courseProgress(c),cids=c.cats.filter(function(x){return sel==="all"||x===sel});
+  var h='<div class="mc mc-'+st+'"><button class="mc-h" data-course="'+c.id+'"><span class="tile">💊</span><span class="t"><b>'+esc(c.name)+'</b><span>'+(c.dose?esc(c.dose)+' · ':'')+(c.per>1?c.per+' раза в день':'1 раз в день')+' · '+esc(namesJoin(c.cats.map(cat).filter(Boolean)))+'</span></span>';
+  if(st==="active")h+='<span class="badge b-grn">день '+courseDayNo(c)+' из '+c.days+'</span>';
+  else if(st==="soon")h+='<span class="badge b-amb">с '+fmtShort(c.start)+'</span>';
+  else h+='<span class="badge" style="background:var(--soft);color:var(--muted)">завершён</span>';
+  h+='</button>';
+  if(st==="active"){h+='<div class="mc-today"><div class="k">Сегодня</div>'+dosePills(c,today(),cids)+'</div>'}
+  h+='<div class="mc-bar"><i style="width:'+(p.tot?Math.round(p.done/p.tot*100):0)+'%"></i></div><div class="mc-f">'+fmtShort(c.start)+' — '+fmtShort(courseEnd(c))+' · отмечено '+p.done+' из '+p.tot+'</div></div>';
+  return h;
+}
+function todayMeds(sel){
+  var a=activeCourses(sel);if(!a.length)return'';
+  var h='<h2>Лекарства сегодня</h2>';a.forEach(function(c){h+=courseCard(c,sel)});return h;
+}
+function medsView(sel){
+  var all=(S.courses||[]).filter(function(c){return courseFor(c,sel)});
+  var act=all.filter(function(c){return courseState(c)!=="done"}).sort(function(a,b){return a.start<b.start?-1:1});
+  var done=all.filter(function(c){return courseState(c)==="done"}).sort(function(a,b){return a.start<b.start?1:-1});
+  var h='';
+  if(!all.length)return'<div class="empty" style="margin-top:14px">Курсов пока нет. Если врач назначил лекарство на несколько дней, создайте курс: журнал покажет, что дать сегодня, и вы будете отмечать каждый приём.</div>'+(readOnly?'':'<div style="margin-top:12px"><button class="btn pri" data-act="addcourse">＋ Новый курс</button></div>');
+  h+='<h2>Текущие</h2>';
+  if(!act.length)h+='<div class="empty">Сейчас курсов нет.</div>';
+  act.forEach(function(c){h+=courseCard(c,sel)});
+  if(done.length){h+='<h2>Завершённые</h2>';done.forEach(function(c){h+=courseCard(c,sel)})}
+  return h;
+}
+function courseForm(c){
+  var isNew=!c;
+  c=c||{id:uid(),name:"",dose:"",per:2,start:today(),days:7,cats:ui.sel!=="all"?[ui.sel]:S.cats.map(function(k){return k.id}),note:"",marks:{}};
+  var per=+c.per||1,sel={};c.cats.forEach(function(x){sel[x]=1});
+  var chips=S.cats.map(function(k){return'<button class="ty'+(sel[k.id]?" on":"")+'" data-pc="'+k.id+'"><span class="e"><span class="pcav" style="'+faceStyle(k)+'">'+face(k)+'</span></span>'+esc(k.name)+'</button>'}).join("");
+  openModal('<h3>'+(isNew?"Новый курс":"Курс: "+esc(c.name))+'</h3>'+
+    '<label class="fl">Лекарство</label><input class="in" id="cn" value="'+esc(c.name)+'" placeholder="Например: Синулокс">'+
+    '<label class="fl">Доза</label><input class="in" id="cd" value="'+esc(c.dose)+'" placeholder="Например: ½ таблетки">'+
+    '<label class="fl">Сколько раз в день</label><div class="seg2">'+[1,2,3].map(function(n){return'<button data-per="'+n+'" class="'+(n===per?"on":"")+'">'+n+'</button>'}).join("")+'</div>'+
+    '<div class="row"><div><label class="fl">Начало</label><input class="in" type="date" id="cs" value="'+esc(c.start)+'"></div><div><label class="fl">Дней</label><input class="in" type="number" inputmode="numeric" min="1" max="365" id="cy" value="'+esc(c.days)+'"></div></div>'+
+    '<label class="fl">Кому</label><div class="types">'+chips+'</div>'+
+    '<label class="fl">Заметка</label><textarea class="in" id="cno" placeholder="Что назначил врач, с едой или без…">'+esc(c.note)+'</textarea>'+
+    '<div class="hint" id="cerr" style="color:var(--red)"></div>'+
+    '<div class="actions">'+(isNew?'':'<button class="btn danger" data-del>Удалить</button>')+'<span class="sp"></span><button class="btn" data-x>Отмена</button><button class="btn pri" data-ok>Сохранить</button></div>',
+  function(m){
+    m.querySelectorAll("[data-per]").forEach(function(b){b.onclick=function(){per=+b.dataset.per;m.querySelectorAll("[data-per]").forEach(function(z){z.classList.toggle("on",z===b)})}});
+    m.querySelectorAll("[data-pc]").forEach(function(b){b.onclick=function(){var id=b.dataset.pc;if(sel[id])delete sel[id];else sel[id]=1;b.classList.toggle("on",!!sel[id])}});
+    m.querySelector("[data-x]").onclick=closeModal;
+    var d=m.querySelector("[data-del]");if(d)d.onclick=function(){closeModal();ask("Удалить курс «"+c.name+"» вместе с отметками?","Удалить",function(){S.courses=S.courses.filter(function(x){return x.id!==c.id});commit()})};
+    m.querySelector("[data-ok]").onclick=function(){
+      var n=m.querySelector("#cn").value.trim(),days=parseInt(m.querySelector("#cy").value,10),st=m.querySelector("#cs").value,err=m.querySelector("#cerr");
+      if(!n){err.textContent="Впишите название лекарства.";return}
+      if(!st){err.textContent="Укажите дату начала.";return}
+      if(!(days>=1)){err.textContent="Укажите, сколько дней длится курс.";return}
+      if(!Object.keys(sel).length){err.textContent="Отметьте хотя бы одного кота.";return}
+      c.name=n;c.dose=m.querySelector("#cd").value.trim();c.per=per;c.start=st;c.days=days;c.cats=S.cats.map(function(k){return k.id}).filter(function(id){return sel[id]});c.note=m.querySelector("#cno").value.trim();c.marks=c.marks||{};
+      if(isNew){S.courses=S.courses||[];S.courses.push(c)}
+      closeModal();ui.view="meds";commit();
+    };
+  });
+}
+function courseView(c){
+  var sl=SLOTS[c.per]||SLOTS[1],h='<h3>'+esc(c.name)+'</h3><p class="hint" style="margin:-8px 0 12px">'+(c.dose?esc(c.dose)+' · ':'')+(c.per>1?c.per+' раза в день':'1 раз в день')+' · '+fmt(c.start)+' — '+fmt(courseEnd(c))+(c.note?'<br>'+esc(c.note):'')+'</p><div class="cgrid">';
+  for(var i=0;i<(+c.days||1);i++){var d=addDays(c.start,i),isT=d===today();
+    h+='<div class="cg-d'+(isT?" today":"")+'"><div class="cg-l"><b>'+fmtShort(d)+'</b><span>день '+(i+1)+(isT?' · сегодня':'')+'</span></div>'+dosePills(c,d,c.cats)+'</div>'}
+  h+='</div><div class="actions">'+(readOnly?'':'<button class="btn" data-edc>Изменить</button>')+'<span class="sp"></span><button class="btn pri" data-x>Готово</button></div>';
+  openModal(h,function(m){
+    m.querySelector("[data-x]").onclick=closeModal;
+    var e=m.querySelector("[data-edc]");if(e)e.onclick=function(){closeModal();courseForm(c)};
+    m.addEventListener("click",function(ev){var b=ev.target.closest("[data-mark]");if(!b)return;toggleMark(b.dataset.mark);var on=b.classList.toggle("on");var lbl=sl[+b.dataset.mark.split("|")[2]];b.textContent=(on?"✓ ":"")+lbl});
+  });
+}
+function toggleMark(s){if(readOnly)return;var p=s.split("|"),c=(S.courses||[]).filter(function(x){return x.id===p[0]})[0];if(!c)return;c.marks=c.marks||{};var k=mkey(p[1],p[2],p[3]);if(c.marks[k])delete c.marks[k];else c.marks[k]=1;S.updated=Date.now();clearTimeout(saveTimer);saveTimer=setTimeout(save,600)}
+
+/* ---------- медицинские документы ---------- */
+var DKINDS=[["lab","Анализы","🧪"],["xray","Рентген","🩻"],["us","УЗИ","🩺"],["concl","Заключение","📋"],["pass","Паспорт","📘"],["other","Другое","📄"]];
+function dkind(k){for(var i=0;i<DKINDS.length;i++)if(DKINDS[i][0]===k)return DKINDS[i];return DKINDS[DKINDS.length-1]}
+function fsize(n){return n>1048576?(Math.round(n/104857.6)/10).toLocaleString("ru-RU")+" МБ":Math.max(1,Math.round(n/1024))+" КБ"}
+function isImg(d){return/^image\//.test(d.mime||"")}
+function docsList(sel){return(S.docs||[]).filter(function(d){return urlCache[d.a]&&(sel==="all"||d.cats.indexOf(sel)>=0)&&(ui.dk==null||ui.dk==="all"||d.kind===ui.dk)}).sort(function(a,b){return a.date<b.date?1:a.date>b.date?-1:(b.t||0)-(a.t||0)})}
+function docsView(sel){
+  var all=(S.docs||[]).filter(function(d){return urlCache[d.a]&&(sel==="all"||d.cats.indexOf(sel)>=0)});
+  var h='';
+  if(!all.length)return'<div class="empty" style="margin-top:14px">Здесь будут анализы, рентген, УЗИ и заключения врачей. Можно добавить PDF или фото документа, отметить, чей он и от какого числа.</div>'+(readOnly?'':'<div style="margin-top:12px"><button class="btn pri" data-act="adddoc">＋ Добавить документ</button></div>');
+  var kinds={};all.forEach(function(d){kinds[d.kind]=1});
+  h+='<div class="filters" style="margin-top:14px"><button class="f'+(!ui.dk||ui.dk==="all"?" on":"")+'" data-dk="all">Все</button>';
+  DKINDS.forEach(function(k){if(kinds[k[0]])h+='<button class="f'+(ui.dk===k[0]?" on":"")+'" data-dk="'+k[0]+'">'+k[2]+' '+k[1]+'</button>'});
+  h+='</div>';
+  var ds=docsList(sel),lastY="";
+  ds.forEach(function(d){var y=d.date.slice(0,4),K=dkind(d.kind);
+    if(y!==lastY){h+='<div class="month">'+y+'</div>';lastY=y}
+    h+='<button class="doc" data-doc="'+d.id+'"><span class="doc-th">'+(isImg(d)?'<img src="'+esc(urlCache[d.a])+'" alt="" loading="lazy">':'<span class="pdf">'+(/pdf/.test(d.mime||"")?"PDF":"FILE")+'</span>')+'</span><span class="t"><b>'+esc(d.title||K[1])+'</b><span>'+K[2]+' '+esc(K[1])+' · '+dmy(d.date)+'</span>'+(d.note?'<small>'+esc(d.note)+'</small>':'')+'</span>'+(sel==="all"&&S.cats.length>1?miniAvs(d.cats.map(cat).filter(Boolean)):'')+'</button>'});
+  if(!ds.length)h+='<div class="empty">В этой категории пока пусто.</div>';
+  h+='<div class="hint">Документы хранятся на этом телефоне и в резервную копию не входят. Оригиналы бумажных документов лучше тоже сохранить.</div>';
+  return h;
+}
+function docForm(d){
+  var isNew=!d,files=[];
+  d=d||{id:"",kind:"lab",title:"",date:today(),cats:ui.sel!=="all"?[ui.sel]:S.cats.map(function(k){return k.id}),note:""};
+  var kind=d.kind,sel={};d.cats.forEach(function(x){sel[x]=1});
+  var kinds=DKINDS.map(function(k){return'<button class="ty'+(k[0]===kind?" on":"")+'" data-dkk="'+k[0]+'"><span class="e">'+k[2]+'</span>'+k[1]+'</button>'}).join("");
+  var chips=S.cats.map(function(k){return'<button class="ty'+(sel[k.id]?" on":"")+'" data-pc="'+k.id+'"><span class="e"><span class="pcav" style="'+faceStyle(k)+'">'+face(k)+'</span></span>'+esc(k.name)+'</button>'}).join("");
+  openModal('<h3>'+(isNew?"Новый документ":"Документ")+'</h3>'+
+    (isNew?'<button class="filepick" data-pick><span>📎</span><b id="fpn">Выбрать файл</b><small>PDF или фото, можно несколько</small></button><input type="file" id="dfi" multiple accept="application/pdf,image/*" hidden>':
+      '<div class="viewer">'+(isImg(d)?'<img src="'+esc(urlCache[d.a])+'" alt="">':'<div class="pdfbig"><span class="pdf">'+(/pdf/.test(d.mime||"")?"PDF":"FILE")+'</span><b>'+esc(d.name||"Файл")+'</b><small>'+fsize(d.size||0)+'</small></div>')+'</div>'+
+      '<div class="actions" style="margin-top:10px"><a class="btn" href="'+esc(urlCache[d.a])+'" target="_blank" rel="noopener">Открыть</a><button class="btn" data-share>Поделиться</button></div>')+
+    '<label class="fl">Что это</label><div class="types">'+kinds+'</div>'+
+    '<label class="fl">Название</label><input class="in" id="dt" value="'+esc(d.title)+'" placeholder="Например: Общий анализ крови">'+
+    '<label class="fl">Дата документа</label><input class="in" type="date" id="dd" value="'+esc(d.date)+'">'+
+    '<label class="fl">Чей</label><div class="types">'+chips+'</div>'+
+    '<label class="fl">Заметка</label><textarea class="in" id="dno" placeholder="Что показал, что сказал врач…">'+esc(d.note)+'</textarea>'+
+    '<div class="hint" id="derr" style="color:var(--red)"></div>'+
+    '<div class="actions">'+(isNew?'':'<button class="btn danger" data-del>Удалить</button>')+'<span class="sp"></span><button class="btn" data-x>Отмена</button><button class="btn pri" data-ok>Сохранить</button></div>',
+  function(m){
+    var err=m.querySelector("#derr");
+    m.querySelectorAll("[data-dkk]").forEach(function(b){b.onclick=function(){kind=b.dataset.dkk;m.querySelectorAll("[data-dkk]").forEach(function(z){z.classList.toggle("on",z===b)})}});
+    m.querySelectorAll("[data-pc]").forEach(function(b){b.onclick=function(){var id=b.dataset.pc;if(sel[id])delete sel[id];else sel[id]=1;b.classList.toggle("on",!!sel[id])}});
+    m.querySelector("[data-x]").onclick=closeModal;
+    if(isNew){var fi=m.querySelector("#dfi");m.querySelector("[data-pick]").onclick=function(){fi.click()};
+      fi.onchange=function(){files=Array.prototype.slice.call(fi.files||[]);m.querySelector("#fpn").textContent=files.length?(files.length===1?files[0].name:files.length+" файла(ов) выбрано"):"Выбрать файл";
+        if(files.length===1&&!m.querySelector("#dt").value)m.querySelector("#dt").value=files[0].name.replace(/\.[^.]+$/,"")}}
+    var sh=m.querySelector("[data-share]");if(sh)sh.onclick=function(){
+      idbGet("photos",d.a).then(function(b){try{var f=new File([b],d.name||"document",{type:d.mime||b.type});if(navigator.canShare&&navigator.canShare({files:[f]}))return navigator.share({files:[f],title:d.title||d.name});err.textContent="Поделиться не получилось: используйте «Открыть»."}catch(e){err.textContent="Поделиться не получилось: используйте «Открыть»."}}).catch(function(){})};
+    var dl=m.querySelector("[data-del]");if(dl)dl.onclick=function(){closeModal();ask("Удалить документ насовсем?","Удалить",function(){S.docs=S.docs.filter(function(x){return x.id!==d.id});assets.delete(d.a).catch(function(){});commit()})};
+    m.querySelector("[data-ok]").onclick=function(){
+      var cats=S.cats.map(function(k){return k.id}).filter(function(id){return sel[id]}),date=m.querySelector("#dd").value,title=m.querySelector("#dt").value.trim(),note=m.querySelector("#dno").value.trim();
+      if(!cats.length){err.textContent="Отметьте, чей это документ.";return}
+      if(!date){err.textContent="Укажите дату.";return}
+      if(!isNew){d.kind=kind;d.title=title;d.date=date;d.cats=cats;d.note=note;closeModal();commit();return}
+      if(!files.length){err.textContent="Сначала выберите файл.";return}
+      m.dataset.lock="1";var ok=m.querySelector("[data-ok]");ok.textContent="Сохраняю…";ok.disabled=true;
+      S.docs=S.docs||[];var i=0;
+      (function next(){
+        if(i>=files.length){m.dataset.lock="";closeModal();ui.view="docs";commit();return}
+        var f=files[i++];
+        assets.upload(f).then(function(r){S.docs.push({id:uid(),a:r.id,name:f.name,mime:f.type,size:f.size,kind:kind,title:files.length>1?(title?title+" ("+i+")":f.name.replace(/\.[^.]+$/,"")):title,date:date,cats:cats.slice(),note:note,t:Date.now()});next()},function(){err.textContent="Не удалось сохранить «"+f.name+"». Возможно, на телефоне мало места.";next()});
+      })();
+    };
+  });
+}
+
 /* ---------- отрисовка ---------- */
 function remRow(r,showCat){
   var T=TYPES[r.type],c=r.cat;
   return'<button class="rem" data-repeat="'+r.last.id+'"><span class="tile">'+T.e+(showCat?'<span class="mini" style="'+faceStyle(c)+'">'+face(c)+'</span>':'')+'</span><div class="t"><b>'+esc(T.l)+(showCat?' · '+esc(c.name):'')+'</b><span>'+fmt(r.due)+(r.last.title?' · '+esc(r.last.title):'')+'</span></div>'+dueBadge(r.days)+'</button>';
 }
-function render(){
-  if(ui.sel!=="all"&&!cat(ui.sel))ui.sel="all";
-  var h='<div class="top"><div class="in-w"><h1><span class="logo">🐾</span>Кошачий журнал</h1><div class="status" id="status"></div></div></div><div class="wrap">';
-  if(readOnly)h+='<div class="ro">Вы смотрите журнал без права изменять его.</div>';
-  if(!S.cats.length){
-    h+='<div class="welcome"><div class="big">🐈</div><h3>Начнём с котиков</h3><p>Добавьте каждого кота, а потом записывайте вес, прививки, обработки и визиты к врачу. Журнал сам посчитает, когда что делать в следующий раз.</p>'+(readOnly?'':'<button class="btn pri" data-act="addcat">Добавить кота</button><div style="margin-top:10px"><button class="btn" data-act="restore">Перенести из старого журнала</button></div>')+'</div></div>';
-    $("#root").innerHTML=h;return;
-  }
-  h+='<div class="stories"><button class="st'+(ui.sel==="all"?" on":"")+'" data-sel="all"><span class="ring"><span class="av all">🐾</span></span><span class="lb">Все</span></button>';
-  S.cats.forEach(function(c){h+='<button class="st'+(ui.sel===c.id?" on":"")+'" data-sel="'+c.id+'"><span class="ring"><span class="av" style="'+faceStyle(c)+'">'+face(c)+'</span></span><span class="lb">'+esc(c.name)+'</span></button>'});
-  if(!readOnly)h+='<button class="st" data-act="addcat"><span class="ring" style="background:none"><span class="av plus">+</span></span><span class="lb">Добавить</span></button>';
-  h+='</div>';
-  var c=ui.sel==="all"?null:cat(ui.sel);
-  h+='<div class="seg"><button class="'+(ui.view!=="care"?"on":"")+'" data-view="main">'+(c?"Карточка":"Сводка")+'</button><button class="'+(ui.view==="care"?"on":"")+'" data-view="care">Прививки и обработки</button></div>';
-  if(ui.view==="care"){
-    h+=careView(ui.sel)+'</div>';
-    if(!readOnly)h+='<button class="fab" data-act="add"><span style="font-size:20px;line-height:1">＋</span> Запись</button>';
-    $("#root").innerHTML=h;return;
-  }
-  var rs=reminders(ui.sel);
-  if(c){
-    var meta=[];if(c.sex)meta.push(c.sex);if(c.birth)meta.push("родил"+(c.sex==="кошка"?"ась ":"ся ")+fmt(c.birth));
-    h+='<div class="hero"><div class="ph" style="'+faceStyle(c)+'">'+face(c)+'</div>'+(readOnly?'':'<button class="ed" data-act="editcat" data-id="'+c.id+'">'+(c.photo?'Изменить':'＋ Фото')+'</button>')+'<div class="cap"><div class="nm">'+esc(c.name)+'</div>'+(meta.length?'<div class="mt">'+esc(meta.join(" · "))+'</div>':'')+'</div></div>';
-    if(c.notes)h+='<div class="notes">'+esc(c.notes)+'</div>';
-    var w=weights(c),nx=rs[0];
-    h+='<div class="stats"><div class="stat"><div class="k">Возраст</div><div class="v">'+esc(ageShort(c.birth))+'</div></div>'+
-      '<div class="stat"><div class="k">Вес</div><div class="v">'+(w.length?kg(w[w.length-1].v)+' кг':'—')+'</div>'+(w.length?'<div class="s">'+fmtShort(w[w.length-1].d)+'</div>':'')+'</div>'+
-      '<div class="stat"><div class="k">Ближайшее</div><div class="v">'+(nx?TYPES[nx.type].e+' '+(nx.days<=0?'<span style="color:var(--red)">!</span>':fmtShort(nx.due)):'—')+'</div>'+(nx?'<div class="s">'+esc(TYPES[nx.type].s||TYPES[nx.type].l)+'</div>':'')+'</div></div>';
-  }else{
-    h+=dashboard(rs);
-  }
-  if(c){
-    h+='<h2>Что дальше</h2>';
-    if(!rs.length)h+='<div class="empty">Пока нечего напоминать. Запишите прививку, обработку или стрижку когтей, и здесь появится дата следующей.</div>';
-    rs.forEach(function(r){h+=remRow(r,false)});
-    if(rs.length&&!readOnly)h+='<div class="hint">Нажмите на напоминание, когда сделаете: откроется новая запись с тем же препаратом.</div>';
-    h+=weightChart(c);
-    h+='<h2>Праздники</h2>'+celebCard([c]);
-    h+='<h2>Фото</h2>'+photoCard(c.id);
-    h+='<h2>Расходы</h2>'+expCard(c.id);
-  }
-  h+='<h2>'+(c?'Записи':'Все записи')+'</h2><div class="filters"><button class="f'+(ui.filter==="all"?" on":"")+'" data-filter="all">Все</button>';
+/* ---------- навигация ---------- */
+var VIEWS=[["main","Сводка","🏠"],["care","Прививки и обработки","💉"],["meds","Лекарства","💊"],["docs","Документы","📄"],["photos","Фото","📷"],["exp","Расходы","💸"],["log","Все записи","📋"]];
+function viewName(v,c){if(v==="main")return c?"Карточка кота":"Сводка";for(var i=0;i<VIEWS.length;i++)if(VIEWS[i][0]===v)return VIEWS[i][1];return""}
+function navHtml(c){
+  var act=activeCourses(ui.sel).length;
+  var h='<nav class="drawer'+(ui.menu?" open":"")+'"><div class="dr-h"><span class="logo">🐾</span><b>Кошачий журнал</b></div>';
+  VIEWS.forEach(function(v){var n=v[0]==="meds"&&act?'<em>'+act+'</em>':'';h+='<button class="dr-i'+(ui.view===v[0]?" on":"")+'" data-view="'+v[0]+'"><span>'+v[2]+'</span>'+esc(v[0]==="main"&&c?"Карточка кота":v[1])+n+'</button>'});
+  h+='<div class="dr-sp"></div><button class="dr-i dr-s" data-act="backup"><span>💾</span>Резервная копия</button>'+(readOnly?'':'<button class="dr-i dr-s" data-act="restore"><span>📥</span>Импорт и восстановление</button>')+'</nav><div class="dr-ov'+(ui.menu?" open":"")+'" data-act="menuclose"></div>';
+  return h;
+}
+function fabFor(v){
+  if(readOnly)return'';
+  var m={meds:["addcourse","Курс"],docs:["adddoc","Документ"],photos:["addphotos","Фото"],exp:["addexp","Расход"]}[v]||["add","Запись"];
+  return'<button class="fab" data-act="'+m[0]+'"><span style="font-size:20px;line-height:1">＋</span> '+m[1]+'</button>';
+}
+function entriesList(c){
+  var h='<div class="filters"><button class="f'+(ui.filter==="all"?" on":"")+'" data-filter="all">Все</button>';
   ORDER.forEach(function(k){h+='<button class="f'+(ui.filter===k?" on":"")+'" data-filter="'+k+'">'+TYPES[k].e+' '+esc(TYPES[k].s||TYPES[k].l)+'</button>'});
   h+='</div>';
   var es=S.entries.filter(function(e){return(ui.sel==="all"||e.catId===ui.sel)&&(ui.filter==="all"||e.type===ui.filter)}).sort(function(a,b){return a.date<b.date?1:a.date>b.date?-1:(b.created||0)-(a.created||0)});
@@ -801,8 +990,51 @@ function render(){
     var show=ui.sel==="all"&&ec,isE=e.type==="expense",EC=isE?ecatOf(e.ecat):null;
     h+='<button class="entry" data-edit="'+e.id+'"><span class="tile">'+(isE?EC[2]:T.e)+(show?'<span class="mini" style="'+faceStyle(ec)+'">'+face(ec)+'</span>':'')+'</span><div class="t"><b>'+(isE?esc(EC[1]):esc(T.l))+'</b>'+(e.title?' <span class="ttl">· '+esc(e.title)+'</span>':'')+'<div class="sub">'+fmtShort(e.date)+(show?' · '+esc(ec.name):'')+(isE&&ui.sel==="all"&&e.catId==="all"?' · общий':'')+(e.next?' · дальше '+fmtShort(e.next):'')+'</div>'+(e.note?'<div class="note">'+esc(e.note)+'</div>':'')+'</div>'+(e.type==="weight"&&e.value?'<span class="val">'+esc(String(e.value).replace(".",","))+' кг</span>':'')+(isE?'<span class="val">'+money(parseFloat(e.amount)||0)+'</span>':'')+'</button>';
   });
-  h+='<div class="foot"><button class="btn" data-act="backup">Резервная копия</button>'+(readOnly?'':'<button class="btn" data-act="restore">Импорт и восстановление</button>')+'</div></div>';
-  if(!readOnly)h+='<button class="fab" data-act="add"><span style="font-size:20px;line-height:1">＋</span> Запись</button>';
+  return h;
+}
+function render(){
+  if(ui.sel!=="all"&&!cat(ui.sel))ui.sel="all";
+  if(!ui.view||!VIEWS.some(function(v){return v[0]===ui.view}))ui.view="main";
+  var c=ui.sel==="all"?null:cat(ui.sel);
+  var h='';
+  if(S.cats.length)h+=navHtml(c);
+  h+='<div class="page"><div class="top"><div class="in-w">'+(S.cats.length?'<button class="menu-b" data-act="menu" aria-label="Меню"><i></i><i></i><i></i></button>':'<span class="logo">🐾</span>')+'<h1>'+esc(S.cats.length?viewName(ui.view,c):"Кошачий журнал")+'</h1><div class="status" id="status"></div></div></div><div class="wrap">';
+  if(readOnly)h+='<div class="ro">Вы смотрите журнал без права изменять его.</div>';
+  if(!S.cats.length){
+    h+='<div class="welcome"><div class="big">🐈</div><h3>Начнём с котиков</h3><p>Добавьте каждого кота, а потом записывайте вес, прививки, обработки и визиты к врачу. Журнал сам посчитает, когда что делать в следующий раз.</p>'+(readOnly?'':'<button class="btn pri" data-act="addcat">Добавить кота</button><div style="margin-top:10px"><button class="btn" data-act="restore">Перенести из старого журнала</button></div>')+'</div></div></div>';
+    $("#root").innerHTML=h;return;
+  }
+  h+='<div class="stories"><button class="st'+(ui.sel==="all"?" on":"")+'" data-sel="all"><span class="ring"><span class="av all">🐾</span></span><span class="lb">Все</span></button>';
+  S.cats.forEach(function(k){h+='<button class="st'+(ui.sel===k.id?" on":"")+'" data-sel="'+k.id+'"><span class="ring"><span class="av" style="'+faceStyle(k)+'">'+face(k)+'</span></span><span class="lb">'+esc(k.name)+'</span></button>'});
+  if(!readOnly)h+='<button class="st" data-act="addcat"><span class="ring" style="background:none"><span class="av plus">+</span></span><span class="lb">Добавить</span></button>';
+  h+='</div>';
+  var v=ui.view;
+  if(v==="care")h+=careView(ui.sel);
+  else if(v==="meds")h+=medsView(ui.sel);
+  else if(v==="docs")h+=docsView(ui.sel);
+  else if(v==="photos")h+='<div style="margin-top:14px">'+photoCard(c?c.id:null)+'</div>';
+  else if(v==="exp")h+='<div style="margin-top:14px">'+expCard(c?c.id:null)+'</div>';
+  else if(v==="log")h+='<div style="margin-top:14px">'+entriesList(c)+'</div>';
+  else{
+    var rs=reminders(ui.sel);
+    if(c){
+      var meta=[];if(c.sex)meta.push(c.sex);if(c.birth)meta.push("родил"+(c.sex==="кошка"?"ась ":"ся ")+fmt(c.birth));
+      h+='<div class="hero"><div class="ph" style="'+faceStyle(c)+'">'+face(c)+'</div>'+(readOnly?'':'<button class="ed" data-act="editcat" data-id="'+c.id+'">'+(c.photo?'Изменить':'＋ Фото')+'</button>')+'<div class="cap"><div class="nm">'+esc(c.name)+'</div>'+(meta.length?'<div class="mt">'+esc(meta.join(" · "))+'</div>':'')+'</div></div>';
+      if(c.notes)h+='<div class="notes">'+esc(c.notes)+'</div>';
+      var w=weights(c),nx=rs[0];
+      h+='<div class="stats"><div class="stat"><div class="k">Возраст</div><div class="v">'+esc(ageShort(c.birth))+'</div></div>'+
+        '<div class="stat"><div class="k">Вес</div><div class="v">'+(w.length?kg(w[w.length-1].v)+' кг':'—')+'</div>'+(w.length?'<div class="s">'+fmtShort(w[w.length-1].d)+'</div>':'')+'</div>'+
+        '<div class="stat"><div class="k">Ближайшее</div><div class="v">'+(nx?TYPES[nx.type].e+' '+(nx.days<=0?'<span style="color:var(--red)">!</span>':fmtShort(nx.due)):'—')+'</div>'+(nx?'<div class="s">'+esc(TYPES[nx.type].s||TYPES[nx.type].l)+'</div>':'')+'</div></div>';
+      h+=todayMeds(c.id);
+      h+='<h2>Что дальше</h2>';
+      if(!rs.length)h+='<div class="empty">Пока нечего напоминать. Запишите прививку, обработку или стрижку когтей, и здесь появится дата следующей.</div>';
+      rs.forEach(function(r){h+=remRow(r,false)});
+      if(rs.length&&!readOnly)h+='<div class="hint">Нажмите на напоминание, когда сделаете: откроется новая запись с тем же препаратом.</div>';
+      h+=weightChart(c);
+      h+='<h2>Праздники</h2>'+celebCard([c]);
+    }else h+=dashboard(rs);
+  }
+  h+='</div>'+fabFor(v)+'</div>';
   $("#root").innerHTML=h;
 }
 
@@ -811,9 +1043,14 @@ function openModal(html,bind){
   modalOpen=true;
   var ov=document.createElement("div");ov.className="ov";ov.innerHTML='<div class="modal">'+html+'</div>';
   ov.addEventListener("click",function(ev){if(ev.target===ov)closeModal()});
-  document.body.appendChild(ov);bind(ov.querySelector(".modal"));
+  document.body.appendChild(ov);var m=ov.querySelector(".modal");bind(m);
+  var y0=null,dy=0;
+  m.addEventListener("touchstart",function(e){if(m.dataset.lock||m.scrollTop>0||e.touches.length>1){y0=null;return}y0=e.touches[0].clientY;dy=0;m.style.transition="none"},{passive:true});
+  m.addEventListener("touchmove",function(e){if(y0==null)return;dy=e.touches[0].clientY-y0;if(m.scrollTop>0){y0=null;m.style.transform="";return}if(dy>0)m.style.transform="translateY("+dy+"px)"},{passive:true});
+  m.addEventListener("touchend",function(){if(y0==null)return;m.style.transition="transform .22s ease";if(dy>90){m.style.transform="translateY(110%)";setTimeout(function(){if(ov.parentNode){ov.remove();modalOpen=!!document.querySelector(".ov")}},200)}else m.style.transform="";y0=null});
 }
-function closeModal(){var o=document.querySelector(".ov");if(o)o.remove();modalOpen=false}
+document.addEventListener("keydown",function(e){if(e.key==="Escape"){if(document.querySelector(".ov")){var o=document.querySelector(".ov .modal");if(!o.dataset.lock)closeModal()}else if(ui.menu){ui.menu=false;render()}}});
+function closeModal(){var o=document.querySelectorAll(".ov");if(o.length)o[o.length-1].remove();modalOpen=!!document.querySelector(".ov")}
 function ask(text,yes,cb){
   openModal('<h3>'+esc(text)+'</h3><div class="actions"><span class="sp"></span><button class="btn" data-x>Отмена</button><button class="btn danger" data-y>'+esc(yes)+'</button></div>',function(m){
     m.querySelector("[data-x]").onclick=closeModal;m.querySelector("[data-y]").onclick=function(){closeModal();cb()};
@@ -934,7 +1171,7 @@ function entryForm(e,preset){
 function backupName(){return"koshachiy-zhurnal-"+today()+".json"}
 function backup(){
   var txt=JSON.stringify(S);
-  openModal('<h3>Резервная копия</h3><p class="hint" style="margin:0 0 12px">Здесь все записи, расходы и аватарки котов. Фото из фотоленты в копию не входят: они хранятся на этом устройстве отдельно.</p><textarea class="in" id="bk" style="min-height:150px;font-size:12px" readonly>'+esc(txt)+'</textarea><div class="actions"><span class="hint" id="cpm" style="margin:0"></span><span class="sp"></span><button class="btn" data-dl>Скачать файл</button><button class="btn pri" data-cp>Скопировать</button></div><div class="actions" style="margin-top:8px"><span class="sp"></span><button class="btn" data-x>Закрыть</button></div>',function(m){
+  openModal('<h3>Резервная копия</h3><p class="hint" style="margin:0 0 12px">Здесь все записи, расходы и аватарки котов. Фото из фотоленты и документы в копию не входят: они хранятся на этом устройстве отдельно.</p><textarea class="in" id="bk" style="min-height:150px;font-size:12px" readonly>'+esc(txt)+'</textarea><div class="actions"><span class="hint" id="cpm" style="margin:0"></span><span class="sp"></span><button class="btn" data-dl>Скачать файл</button><button class="btn pri" data-cp>Скопировать</button></div><div class="actions" style="margin-top:8px"><span class="sp"></span><button class="btn" data-x>Закрыть</button></div>',function(m){
     m.querySelector("[data-x]").onclick=closeModal;
     m.querySelector("[data-cp]").onclick=function(){
       var ta=m.querySelector("#bk");
@@ -971,7 +1208,7 @@ function mergeImport(d){
 function applyBackup(d){
   if(!d||!Array.isArray(d.cats)||!Array.isArray(d.entries))throw 0;
   var ph=Array.isArray(d.photos)?d.photos:[],keep=ph.filter(function(p){return urlCache[p.a]}),lost=ph.length-keep.length;
-  d.photos=keep;S=d;ui.sel="all";return lost;
+  d.photos=keep;var dk=Array.isArray(d.docs)?d.docs:[];d.docs=dk.filter(function(x){return urlCache[x.a]});lost+=dk.length-d.docs.length;d.courses=Array.isArray(d.courses)?d.courses:[];S=d;ui.sel="all";return lost;
 }
 function restore(){
   openModal('<h3>Перенести данные</h3><p class="hint" style="margin:0 0 12px">Вставьте текст резервной копии или выберите файл. Резервная копия заменит всё, что есть сейчас. Файл импорта, который готовит Claude, только добавит новые записи и ничего не удалит.</p><textarea class="in" id="rs" style="min-height:140px;font-size:12px" placeholder="Вставьте текст копии"></textarea><input type="file" accept=".json,application/json,text/plain" id="rf" hidden><div class="hint" id="rerr" style="color:var(--red)"></div><div class="actions"><button class="btn" data-file>Из файла</button><span class="sp"></span><button class="btn" data-x>Отмена</button><button class="btn pri" data-ok>Перенести</button></div>',function(m){
@@ -994,14 +1231,21 @@ function restore(){
 
 /* ---------- клики ---------- */
 document.addEventListener("click",function(ev){
-  var t=ev.target.closest("[data-sel],[data-view],[data-filter],[data-act],[data-edit],[data-repeat],[data-ph]");
+  var t=ev.target.closest("[data-sel],[data-view],[data-filter],[data-act],[data-edit],[data-repeat],[data-ph],[data-mark],[data-course],[data-doc],[data-dk]");
   if(!t||t.closest(".modal"))return;
   if(t.dataset.sel){ui.sel=t.dataset.sel;keepUI();render();window.scrollTo(0,0);return}
-  if(t.dataset.view){ui.view=t.dataset.view;keepUI();render();window.scrollTo(0,0);return}
+  if(t.dataset.view){ui.view=t.dataset.view;ui.menu=false;keepUI();render();window.scrollTo(0,0);return}
+  if(t.dataset.act==="menu"){ui.menu=true;render();return}
+  if(t.dataset.act==="menuclose"){ui.menu=false;render();return}
+  if(t.dataset.dk){ui.dk=t.dataset.dk;keepUI();render();return}
+  if(t.dataset.mark){toggleMark(t.dataset.mark);render();return}
+  if(t.dataset.course){var cc=(S.courses||[]).filter(function(x){return x.id===t.dataset.course})[0];if(cc)courseView(cc);return}
+  if(t.dataset.doc){var dc=(S.docs||[]).filter(function(x){return x.id===t.dataset.doc})[0];if(dc)docForm(dc);return}
   if(t.dataset.filter){ui.filter=t.dataset.filter;keepUI();render();return}
   if(t.dataset.act==="morerem"){ui.more=!ui.more;keepUI();render();return}
   if(t.dataset.act==="allph"){ui.allph=!ui.allph;keepUI();render();return}
   if(t.dataset.ph){var ph=(S.photos||[]).filter(function(x){return x.id===t.dataset.ph})[0];if(ph)photoView(ph);return}
+  if(ui.menu){ui.menu=false}
   if(readOnly&&t.dataset.act!=="backup")return;
   var a=t.dataset.act;
   if(a==="addcat")return catForm(null);
@@ -1010,8 +1254,10 @@ document.addEventListener("click",function(ev){
   if(a==="addcare")return entryForm(null,{type:t.dataset.t,catId:ui.sel!=="all"?ui.sel:(S.cats.length>1?"every":S.cats[0].id)});
   if(a==="addexp")return entryForm(null,{type:"expense",catId:t.dataset.id||(S.cats.length>1?"all":S.cats[0].id)});
   if(a==="addphotos")return assets&&addPhotos(t.dataset.id||null);
-  if(a==="backup")return backup();
-  if(a==="restore")return restore();
+  if(a==="addcourse")return courseForm(null);
+  if(a==="adddoc")return docForm(null);
+  if(a==="backup"){ui.menu=false;render();return backup()}
+  if(a==="restore"){ui.menu=false;render();return restore()}
   if(t.dataset.edit){var e=S.entries.filter(function(x){return x.id===t.dataset.edit})[0];if(e)entryForm(e);return}
   if(t.dataset.repeat){var l=S.entries.filter(function(x){return x.id===t.dataset.repeat})[0];if(l)entryForm(null,{catId:l.catId,type:l.type,title:l.title})}
 });
@@ -1022,7 +1268,7 @@ function boot(){
   idbGet("kv","state").then(function(st){
     if(st&&st.cats)S=st;
     else{try{var L=JSON.parse(localStorage.getItem(KEY)||"null");if(L&&L.cats)S=L}catch(e){}}
-    S.photos=S.photos||[];
+    S.photos=S.photos||[];S.docs=S.docs||[];S.courses=S.courses||[];
     return idbKeys("photos");
   }).then(function(keys){
     return Promise.all((keys||[]).map(function(k){return photoBlobUrl(k).catch(function(){})}));

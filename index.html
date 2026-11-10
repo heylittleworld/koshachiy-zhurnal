@@ -295,6 +295,39 @@ textarea.in{min-height:80px;resize:vertical}
 .cd-rd{font-size:13px;font-weight:600;color:var(--muted);white-space:nowrap}
 .cd-miss .cd-ri{opacity:.6}
 .cd-row .cd-plus{margin:0;font-size:18px}
+.seg{display:flex;background:var(--soft);border-radius:16px;padding:4px;margin:14px 0 0;gap:4px}
+.seg button{flex:1;border:none;background:none;padding:10px 6px;border-radius:12px;font:inherit;font-weight:600;font-size:14px;color:var(--muted)}
+.seg button.on{background:var(--card);color:var(--ink);box-shadow:var(--sh2)}
+.care-s{margin-top:14px;background:var(--card);border:1px solid var(--cb);box-shadow:var(--sh2);border-radius:24px;padding:14px 16px 8px}
+.care-h{display:flex;align-items:center;gap:12px;margin-bottom:8px}
+.care-h .t{flex:1;min-width:0}
+.care-h .t b{display:block;font-size:16px;font-weight:700}
+.care-h .t span{font-size:12.5px;color:var(--muted);line-height:1.35;display:block}
+.care-tb{margin-top:4px}
+.care-hd,.care-r{display:grid;grid-template-columns:92px minmax(0,1fr) auto;gap:10px;align-items:center}
+.care-hd{font-size:11.5px;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.5px;padding:6px 2px}
+.care-r{padding:10px 2px;border:none;border-top:1px solid var(--soft);background:none;width:100%;text-align:left;font:inherit;color:var(--ink)}
+.cr-d{font-variant-numeric:tabular-nums;font-weight:600;font-size:14px}
+.cr-t{font-size:14px;min-width:0}
+.cr-t i{color:var(--muted);font-style:normal}
+.cr-t small{display:block;color:var(--muted);font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:1px}
+.cr-av{display:inline-flex}
+.cr-av span{width:24px;height:24px;border-radius:50%;overflow:hidden;display:inline-flex;align-items:center;justify-content:center;color:#fff;font-size:10px;font-weight:700;box-shadow:0 0 0 2px var(--card)}
+.cr-av span+span{margin-left:-7px}
+.cr-av img{width:100%;height:100%;object-fit:cover}
+.care-add{display:block;width:100%;border:none;border-top:1px solid var(--soft);background:none;color:var(--acc);font:inherit;font-weight:600;font-size:14px;padding:11px 0 6px;text-align:left}
+.cdg{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}
+.cdm{flex:none;max-width:none;width:auto;padding:14px 14px 16px;border-radius:26px}
+.cdm .cd-ic{top:16px;right:16px;font-size:24px}
+.cdm:before{background:radial-gradient(circle at 82% 19%,rgba(255,255,255,.75) 0 24px,transparent 25px),radial-gradient(circle at 94% 44%,rgba(255,255,255,.45) 0 6px,transparent 7px),radial-gradient(circle at 63% 9%,rgba(255,255,255,.5) 0 4px,transparent 5px)}
+.cd-k{font-size:13.5px;font-weight:700;margin-top:12px}
+.cdm .cd-num{margin-top:2px}
+.cdm .cd-num b{font-size:44px;letter-spacing:-2px}
+.cdm .cd-num span{font-size:15px}
+.cdm .cd-s{line-height:1.35;margin-top:4px}
+.cd-soon{position:absolute;left:14px;bottom:auto;top:-1px;transform:translateY(-40%);display:none}
+.cdm .cd-soon{display:inline-block;position:static;transform:none;font-size:11px;font-weight:700;background:rgba(255,255,255,.7);padding:3px 8px;border-radius:999px;margin-bottom:8px}
+.cdm.cd-add .cd-plus{margin-top:10px}
 .ro{color:var(--amb);font-size:13px;padding:10px 14px;border-radius:16px;margin:12px 0}
 </style>
 </head>
@@ -486,25 +519,23 @@ function celebSub(x){
   return date+" · "+(bd?(x.cats.length>1?"исполнится по ":"исполнится ")+y+" "+plural(y,["год","года","лет"]):y+" "+plural(y,["год","года","лет"])+" вместе");
 }
 function celebCard(list){
-  var gs=celebGroups(list),h='';
-  if(gs.length){
-    var x=gs[0],bd=x.k==="bd",d=x.a.days;
-    h+='<div class="cd cd-one '+(bd?"cd-bd":"cd-home")+'"><span class="cd-ic">'+(bd?"🎂":"🏡")+'</span>'+
-      '<div class="cd-top">'+avStack(x.cats,"cd-av")+'<span class="cd-name">'+esc(namesJoin(x.cats))+'</span></div>';
-    if(d===0)h+='<div class="cd-num"><b>🎉</b></div><div class="cd-t">'+(bd?"Сегодня день рождения!":"Сегодня годовщина дома!")+'</div>';
-    else h+='<div class="cd-num"><b>'+d+'</b><span>'+plural(d,["день","дня","дней"])+'</span></div><div class="cd-t">'+(bd?"до дня рождения":"до годовщины дома")+'</div>';
-    h+='<div class="cd-s">'+esc(celebSub(x))+'</div><div class="cd-bar"><i style="width:'+Math.max(3,Math.min(100,Math.round((365-d)/365*100)))+'%"></i></div></div>';
-  }
-  var rows='';
-  gs.slice(1).forEach(function(x){var bd=x.k==="bd";
-    rows+='<div class="cd-row"><span class="cd-ri">'+(bd?"🎂":"🏡")+'</span><span class="t"><b>'+(bd?"День рождения":"Годовщина дома")+' · '+esc(namesJoin(x.cats))+'</b><span>'+esc(celebSub(x))+'</span></span><span class="cd-rd">'+(x.a.days===0?"сегодня 🎉":x.a.days+" "+plural(x.a.days,["день","дня","дней"]))+'</span></div>'});
+  var gs=celebGroups(list),h='<div class="cdg">';
+  gs.forEach(function(x){
+    var bd=x.k==="bd",d=x.a.days,y=x.sameYrs,date=pd(x.a.date).toLocaleDateString("ru-RU",{day:"numeric",month:"long"});
+    var sub=y&&y>0?(bd?"исполнится "+(x.cats.length>1?"по ":"")+y+" "+plural(y,["год","года","лет"]):y+" "+plural(y,["год","года","лет"])+" вместе"):"";
+    h+='<div class="cd cdm '+(bd?"cd-bd":"cd-home")+'">'+(d>0&&d<=14?'<span class="cd-soon">скоро</span>':'')+'<span class="cd-ic">'+(bd?"🎂":"🏡")+'</span>'+
+      '<div class="cd-top">'+avStack(x.cats,"cd-av")+'</div>'+
+      '<div class="cd-k">'+(bd?"День рождения":"Годовщина дома")+'</div>'+
+      (d===0?'<div class="cd-num"><b>🎉</b><span>сегодня!</span></div>':'<div class="cd-num"><b>'+d+'</b><span>'+plural(d,["день","дня","дней"])+'</span></div>')+
+      '<div class="cd-s">'+esc(namesJoin(x.cats))+' · '+date+(sub?'<br>'+esc(sub):'')+'</div></div>';
+  });
   if(!readOnly){
     var noB=list.filter(function(c){return!c.birth}),noH=list.filter(function(c){return!c.home});
-    if(noB.length)rows+='<button class="cd-row cd-miss" data-act="editcat" data-id="'+noB[0].id+'"><span class="cd-ri">🎂</span><span class="t"><b>Дата рождения: '+esc(namesJoin(noB))+'</b><span>Укажите, и появится отсчёт</span></span><span class="cd-plus">＋</span></button>';
-    if(noH.length)rows+='<button class="cd-row cd-miss" data-act="editcat" data-id="'+noH[0].id+'"><span class="cd-ri">🏡</span><span class="t"><b>Когда дома: '+esc(namesJoin(noH))+'</b><span>Укажите, и появится отсчёт</span></span><span class="cd-plus">＋</span></button>';
+    if(noB.length)h+='<button class="cd cdm cd-add" data-act="editcat" data-id="'+noB[0].id+'"><span class="cd-ic">🎂</span><div class="cd-top">'+avStack(noB,"cd-av")+'</div><div class="cd-k">День рождения</div><div class="cd-s" style="margin-top:8px">Дата не указана</div><span class="cd-plus">＋ Указать</span></button>';
+    if(noH.length)h+='<button class="cd cdm cd-add" data-act="editcat" data-id="'+noH[0].id+'"><span class="cd-ic">🏡</span><div class="cd-top">'+avStack(noH,"cd-av")+'</div><div class="cd-k">Годовщина дома</div><div class="cd-s" style="margin-top:8px">Дата не указана</div><span class="cd-plus">＋ Указать</span></button>';
   }
-  if(rows)h+='<div class="cd-rows">'+rows+'</div>';
-  if(!h)h='<div class="empty">Даты пока не указаны.</div>';
+  h+='</div>';
+  if(h==='<div class="cdg"></div>')h='<div class="empty">Даты пока не указаны.</div>';
   return h;
 }
 
@@ -619,7 +650,7 @@ function dashboard(rs){
   var h='<div class="dash"><div class="sum2"><div class="d">Сводка на '+pd(t).toLocaleDateString("ru-RU",{weekday:"long",day:"numeric",month:"long"})+'</div><div class="h">'+esc(head)+(over||week?'':' ✓')+'</div><div class="p">'+esc(p)+'</div>'+
     '<div class="kp"><div><b>'+S.cats.length+'</b><span>'+plural(S.cats.length,["кот","кота","котов"])+'</span></div><div><b>'+month+'</b><span>дел за 30 дней</span></div><div><b>'+thisM+'</b><span>'+plural(thisM,["запись","записи","записей"])+' в этом месяце</span></div></div></div>';
 
-  h+='<h2>Скоро праздник</h2>'+celebCard(S.cats);
+  h+='<h2>Праздники</h2>'+celebCard(S.cats);
 
   /* сравнение котов */
   h+='<h2>Сравнение котов</h2><div class="dcard cmp"><table><tr><th></th>';
@@ -677,6 +708,41 @@ function dashboard(rs){
   return h+'</div>';
 }
 
+/* ---------- прививки и обработки ---------- */
+var CARE=["vacc","fleas","worms","claws","vet"];
+function dmy(d){return pd(d).toLocaleDateString("ru-RU")}
+function miniAvs(cs){return'<span class="cr-av">'+cs.map(function(c){return c?'<span style="'+faceStyle(c)+'">'+face(c)+'</span>':''}).join("")+'</span>'}
+function careView(sel){
+  var ids=sel==="all"?S.cats.map(function(c){return c.id}):[sel],h='';
+  CARE.forEach(function(k){
+    var T=TYPES[k],g={},rows=[];
+    S.entries.forEach(function(e){if(e.type!==k||ids.indexOf(e.catId)<0)return;
+      var key=e.date+"|"+(e.title||"")+"|"+(e.note||"");
+      if(!g[key]){g[key]={date:e.date,title:e.title,note:e.note,cats:[],ids:[]};rows.push(g[key])}
+      g[key].cats.push(cat(e.catId));g[key].ids.push(e.id)});
+    rows.sort(function(a,b){return a.date<b.date?1:a.date>b.date?-1:0});
+    var rs=reminders(sel).filter(function(r){return r.type===k}),st='',badge='';
+    if(rows.length){
+      var last=rows[0].date,nx={};rs.forEach(function(r){(nx[r.due]=nx[r.due]||[]).push(r.cat.name)});
+      var nk=Object.keys(nx).sort();
+      st='последний раз '+dmy(last);
+      if(nk.length===1)st+=' · следующий '+dmy(nk[0]);
+      else if(nk.length>1)st+=' · следующий: '+nk.map(function(d){return nx[d].join(" и ")+' '+dmy(d)}).join(", ");
+      if(rs.length){var m=rs.reduce(function(a,b){return a.days<b.days?a:b});badge=dueBadge(m.days)}
+    }
+    h+='<div class="care-s"><div class="care-h"><span class="tile">'+T.e+'</span><div class="t"><b>'+esc(k==="vacc"?"Прививки":T.l)+'</b><span>'+(st||'записей пока нет')+'</span></div>'+badge+'</div>';
+    if(rows.length){
+      h+='<div class="care-tb"><div class="care-hd"><span>Дата</span><span>'+(k==="vet"?"Клиника, причина":k==="claws"?"Заметка":"Препарат")+'</span><span>'+(sel==="all"&&S.cats.length>1?"Кому":"")+'</span></div>';
+      rows.forEach(function(r){h+='<button class="care-r" data-edit="'+r.ids[0]+'"><span class="cr-d">'+dmy(r.date)+'</span><span class="cr-t">'+(r.title?esc(r.title):'<i>—</i>')+(r.note?'<small>'+esc(r.note)+'</small>':'')+'</span>'+(sel==="all"&&S.cats.length>1?miniAvs(r.cats):'<span></span>')+'</button>'});
+      h+='</div>';
+    }
+    if(!readOnly)h+='<button class="care-add" data-act="addcare" data-t="'+k+'">＋ Добавить</button>';
+    h+='</div>';
+  });
+  if(sel==="all"&&S.cats.length>1)h+='<div class="hint">Одинаковые записи у разных котов показаны одной строкой. Если нажать на такую строку, откроется запись первого кота: правки делаются для каждого кота отдельно.</div>';
+  return h;
+}
+
 /* ---------- отрисовка ---------- */
 function remRow(r,showCat){
   var T=TYPES[r.type],c=r.cat;
@@ -695,6 +761,12 @@ function render(){
   if(!readOnly)h+='<button class="st" data-act="addcat"><span class="ring" style="background:none"><span class="av plus">+</span></span><span class="lb">Добавить</span></button>';
   h+='</div>';
   var c=ui.sel==="all"?null:cat(ui.sel);
+  h+='<div class="seg"><button class="'+(ui.view!=="care"?"on":"")+'" data-view="main">'+(c?"Карточка":"Сводка")+'</button><button class="'+(ui.view==="care"?"on":"")+'" data-view="care">Прививки и обработки</button></div>';
+  if(ui.view==="care"){
+    h+=careView(ui.sel)+'</div>';
+    if(!readOnly)h+='<button class="fab" data-act="add"><span style="font-size:20px;line-height:1">＋</span> Запись</button>';
+    $("#root").innerHTML=h;return;
+  }
   var rs=reminders(ui.sel);
   if(c){
     var meta=[];if(c.sex)meta.push(c.sex);if(c.birth)meta.push("родил"+(c.sex==="кошка"?"ась ":"ся ")+fmt(c.birth));
@@ -806,7 +878,7 @@ function entryForm(e,preset){
   e=e||{id:uid(),catId:ui.sel!=="all"?ui.sel:S.cats[0].id,type:"weight",date:today(),value:"",title:"",note:"",next:"",amount:"",ecat:"food"};
   if(preset){for(var k in preset)e[k]=preset[k]}
   var type=e.type,nextTouched=!isNew&&!!e.next,ecat=e.ecat||"food";
-  var catOpts=S.cats.map(function(c){return'<option value="'+c.id+'"'+(c.id===e.catId?" selected":"")+'>'+esc(c.name)+'</option>'}).join("")+'<option value="all" id="optall"'+(e.catId==="all"?" selected":"")+'>Общий — на всех</option>';
+  var catOpts=S.cats.map(function(c){return'<option value="'+c.id+'"'+(c.id===e.catId?" selected":"")+'>'+esc(c.name)+'</option>'}).join("")+'<option value="all" id="optall"'+(e.catId==="all"?" selected":"")+'>Общий — на всех</option>'+(isNew?'<option value="every" id="optevery"'+(e.catId==="every"?" selected":"")+'>Всем котам</option>':'');
   var tys=ORDER.map(function(k){return'<button class="ty'+(k===type?" on":"")+'" data-t="'+k+'"><span class="e">'+TYPES[k].e+'</span>'+esc(TYPES[k].s||TYPES[k].l)+'</button>'}).join("");
   var ecs=ECATS.map(function(x){return'<button class="ty'+(x[0]===ecat?" on":"")+'" data-ec="'+x[0]+'"><span class="e">'+x[2]+'</span>'+esc(x[1])+'</button>'}).join("");
   openModal('<h3>'+(isNew?"Новая запись":"Запись")+'</h3>'+
@@ -831,7 +903,7 @@ function entryForm(e,preset){
       m.querySelector("#et").placeholder=T.ph||"Необязательно";
       m.querySelector("#nx").style.display=type==="weight"||type==="food"||isE?"none":"";
       m.querySelector("#eno").placeholder=isE?"Где купили, на сколько хватает…":"Что заметили, что сказал врач, реакция…";
-      if(sc){var oa=m.querySelector("#optall");oa.hidden=!isE;oa.disabled=!isE;if(!isE&&sc.value==="all")sc.value=S.cats[0].id}
+      if(sc){var oa=m.querySelector("#optall"),oe=m.querySelector("#optevery");oa.hidden=!isE;oa.disabled=!isE;if(oe){oe.hidden=isE;oe.disabled=isE}if(!isE&&sc.value==="all")sc.value=oe?"every":S.cats[0].id;if(isE&&sc.value==="every")sc.value="all"}
       if(!nextTouched)en.value=T.int&&ed.value?addDays(ed.value,T.int):"";
       m.querySelector("#nh").textContent=T.int?"Подставлено через "+dd(T.int)+". Это обычный ориентир, а точный срок зависит от препарата и того, что сказал врач, поэтому дату можно поменять.":"Можно не заполнять. Если врач назначил повторный приём, поставьте дату, и она появится в напоминаниях.";
     }
@@ -851,7 +923,9 @@ function entryForm(e,preset){
       e.title=type==="weight"?"":m.querySelector("#et").value.trim();
       e.next=(type==="weight"||type==="food"||type==="expense")?"":en.value;
       e.note=m.querySelector("#eno").value.trim();
-      if(isNew){e.created=Date.now();S.entries.push(e)}
+      if(isNew){e.created=Date.now();
+        if(e.catId==="every"){S.cats.forEach(function(c){var x=JSON.parse(JSON.stringify(e));x.id=uid();x.catId=c.id;S.entries.push(x)})}
+        else S.entries.push(e)}
       closeModal();commit();
     };
   });
@@ -875,6 +949,7 @@ function backup(){
 function findCat(n){n=String(n||"").trim().toLowerCase();return S.cats.filter(function(c){return c.name.trim().toLowerCase()===n})[0]}
 function mergeImport(d){
   var r={added:0,skipped:0,upd:0,newCats:0};
+  if(d.replaceEntries){r.removed=S.entries.length;S.entries=[]}
   (d.cats||[]).forEach(function(ic){
     if(!ic||!ic.name)return;
     var c=findCat(ic.name);
@@ -904,7 +979,7 @@ function restore(){
     function done(txt){
       var d;try{d=JSON.parse(txt)}catch(e){err.textContent="Это не похоже на копию журнала. Проверьте, что текст вставлен целиком.";return}
       if(d&&d.kind==="cat-journal-import"){var r=mergeImport(d);ui.sel="all";closeModal();commit();
-        setTimeout(function(){openModal('<h3>Добавлено ✓</h3><p class="hint" style="margin:0">Новых записей: '+r.added+'. Пропущено, потому что уже были: '+r.skipped+'.'+(r.upd?' Обновлены даты в карточках котов.':'')+(r.newCats?' Новых котов: '+r.newCats+'.':'')+' Всё, что было в журнале раньше, осталось на месте.</p><div class="actions"><span class="sp"></span><button class="btn pri" data-x>Отлично</button></div>',function(m2){m2.querySelector("[data-x]").onclick=closeModal})},300);return}
+        setTimeout(function(){openModal('<h3>Готово ✓</h3><p class="hint" style="margin:0">'+(d.replaceEntries?'Старые записи удалены ('+r.removed+'). Котики, аватарки и фото остались. ':'')+'Новых записей: '+r.added+'.'+(r.skipped?' Пропущено, потому что уже были: '+r.skipped+'.':'')+(r.upd?' Обновлены даты в карточках котов.':'')+(r.newCats?' Новых котов: '+r.newCats+'.':'')+(d.replaceEntries?'':' Всё, что было в журнале раньше, осталось на месте.')+'</p><div class="actions"><span class="sp"></span><button class="btn pri" data-x>Отлично</button></div>',function(m2){m2.querySelector("[data-x]").onclick=closeModal})},300);return}
       try{var lost=applyBackup(d);closeModal();commit();
         if(lost)setTimeout(function(){openModal('<h3>Готово ✓</h3><p class="hint" style="margin:0">Записи и аватарки перенесены. '+lost+' '+plural(lost,["фото","фото","фото"])+' из фотоленты нужно добавить заново: они лежали в старом журнале и в копию не входят.</p><div class="actions"><span class="sp"></span><button class="btn pri" data-x>Понятно</button></div>',function(m2){m2.querySelector("[data-x]").onclick=closeModal})},300)}
       catch(e){err.textContent="Это не похоже на копию журнала. Проверьте, что текст вставлен целиком."}
@@ -919,9 +994,10 @@ function restore(){
 
 /* ---------- клики ---------- */
 document.addEventListener("click",function(ev){
-  var t=ev.target.closest("[data-sel],[data-filter],[data-act],[data-edit],[data-repeat],[data-ph]");
+  var t=ev.target.closest("[data-sel],[data-view],[data-filter],[data-act],[data-edit],[data-repeat],[data-ph]");
   if(!t||t.closest(".modal"))return;
   if(t.dataset.sel){ui.sel=t.dataset.sel;keepUI();render();window.scrollTo(0,0);return}
+  if(t.dataset.view){ui.view=t.dataset.view;keepUI();render();window.scrollTo(0,0);return}
   if(t.dataset.filter){ui.filter=t.dataset.filter;keepUI();render();return}
   if(t.dataset.act==="morerem"){ui.more=!ui.more;keepUI();render();return}
   if(t.dataset.act==="allph"){ui.allph=!ui.allph;keepUI();render();return}
@@ -930,7 +1006,8 @@ document.addEventListener("click",function(ev){
   var a=t.dataset.act;
   if(a==="addcat")return catForm(null);
   if(a==="editcat")return catForm(cat(t.dataset.id));
-  if(a==="add")return entryForm(null);
+  if(a==="add")return entryForm(null,ui.view==="care"&&ui.sel==="all"&&S.cats.length>1?{type:"vacc",catId:"every"}:null);
+  if(a==="addcare")return entryForm(null,{type:t.dataset.t,catId:ui.sel!=="all"?ui.sel:(S.cats.length>1?"every":S.cats[0].id)});
   if(a==="addexp")return entryForm(null,{type:"expense",catId:t.dataset.id||(S.cats.length>1?"all":S.cats[0].id)});
   if(a==="addphotos")return assets&&addPhotos(t.dataset.id||null);
   if(a==="backup")return backup();

@@ -404,7 +404,7 @@ function weightChart(c){
   if(!pts.length)return"";
   var col=c.color||"#ff6b3d";
   var last=pts[pts.length-1],h='<h2>Вес</h2><div class="chart"><div class="sum"><span class="big">'+kg(last.v)+' кг</span>';
-  if(pts.length>1){var p=pts[pts.length-2],dv=Math.round((last.v-p.v)*100)/100;h+='<span class="delta">'+(dv>0?"↑ +":dv<0?"↓ ":"")+kg(dv)+' кг с '+fmtShort(p.d)+'</span>'}
+  if(pts.length>1){var p=pts[pts.length-2],dv=Math.round((last.v-p.v)*100)/100;h+='<span class="delta">'+(dv?(dv>0?"↑ +":"↓ ")+kg(dv)+' кг':'без изменений')+' с '+fmtShort(p.d)+'</span>'}
   else h+='<span class="delta">'+fmtShort(last.d)+'</span>';
   h+='</div>';
   if(pts.length>1){
@@ -729,7 +729,7 @@ function render(){
     var show=ui.sel==="all"&&ec,isE=e.type==="expense",EC=isE?ecatOf(e.ecat):null;
     h+='<button class="entry" data-edit="'+e.id+'"><span class="tile">'+(isE?EC[2]:T.e)+(show?'<span class="mini" style="'+faceStyle(ec)+'">'+face(ec)+'</span>':'')+'</span><div class="t"><b>'+(isE?esc(EC[1]):esc(T.l))+'</b>'+(e.title?' <span class="ttl">· '+esc(e.title)+'</span>':'')+'<div class="sub">'+fmtShort(e.date)+(show?' · '+esc(ec.name):'')+(isE&&ui.sel==="all"&&e.catId==="all"?' · общий':'')+(e.next?' · дальше '+fmtShort(e.next):'')+'</div>'+(e.note?'<div class="note">'+esc(e.note)+'</div>':'')+'</div>'+(e.type==="weight"&&e.value?'<span class="val">'+esc(String(e.value).replace(".",","))+' кг</span>':'')+(isE?'<span class="val">'+money(parseFloat(e.amount)||0)+'</span>':'')+'</button>';
   });
-  h+='<div class="foot"><button class="btn" data-act="backup">Резервная копия</button>'+(readOnly?'':'<button class="btn" data-act="restore">Восстановить из копии</button>')+'</div></div>';
+  h+='<div class="foot"><button class="btn" data-act="backup">Резервная копия</button>'+(readOnly?'':'<button class="btn" data-act="restore">Импорт и восстановление</button>')+'</div></div>';
   if(!readOnly)h+='<button class="fab" data-act="add"><span style="font-size:20px;line-height:1">＋</span> Запись</button>';
   $("#root").innerHTML=h;
 }
@@ -872,16 +872,40 @@ function backup(){
     };
   });
 }
+function findCat(n){n=String(n||"").trim().toLowerCase();return S.cats.filter(function(c){return c.name.trim().toLowerCase()===n})[0]}
+function mergeImport(d){
+  var r={added:0,skipped:0,upd:0,newCats:0};
+  (d.cats||[]).forEach(function(ic){
+    if(!ic||!ic.name)return;
+    var c=findCat(ic.name);
+    if(!c){c={id:uid(),name:String(ic.name).trim(),birth:"",home:"",sex:"",color:COLORS[S.cats.length%COLORS.length],notes:"",photo:""};S.cats.push(c);r.newCats++}
+    ["birth","home","sex"].forEach(function(k){if(ic[k]&&c[k]!==ic[k]){c[k]=ic[k];r.upd++}});
+    if(ic.notes&&!c.notes)c.notes=ic.notes;
+  });
+  (d.entries||[]).forEach(function(ie){
+    if(!ie||!ie.type||!ie.date)return;
+    [].concat(ie.cats||ie.cat||[]).forEach(function(n){
+      var cid=n==="all"?"all":(findCat(n)||{}).id;if(!cid)return;
+      if(S.entries.some(function(e){return e.catId===cid&&e.type===ie.type&&e.date===ie.date})){r.skipped++;return}
+      S.entries.push({id:uid(),catId:cid,type:ie.type,date:ie.date,value:ie.value!=null?String(ie.value):"",title:ie.title||"",note:ie.note||"",next:ie.next||"",amount:ie.amount!=null?String(ie.amount):"",ecat:ie.ecat||"",created:Date.now()});
+      r.added++;
+    });
+  });
+  return r;
+}
 function applyBackup(d){
   if(!d||!Array.isArray(d.cats)||!Array.isArray(d.entries))throw 0;
   var ph=Array.isArray(d.photos)?d.photos:[],keep=ph.filter(function(p){return urlCache[p.a]}),lost=ph.length-keep.length;
   d.photos=keep;S=d;ui.sel="all";return lost;
 }
 function restore(){
-  openModal('<h3>Перенести данные</h3><p class="hint" style="margin:0 0 12px">Откройте старый журнал → внизу «Резервная копия» → «Скопировать», и вставьте текст сюда. Или выберите сохранённый файл копии. Всё, что сейчас есть здесь, заменится.</p><textarea class="in" id="rs" style="min-height:140px;font-size:12px" placeholder="Вставьте текст копии"></textarea><input type="file" accept=".json,application/json,text/plain" id="rf" hidden><div class="hint" id="rerr" style="color:var(--red)"></div><div class="actions"><button class="btn" data-file>Из файла</button><span class="sp"></span><button class="btn" data-x>Отмена</button><button class="btn pri" data-ok>Перенести</button></div>',function(m){
+  openModal('<h3>Перенести данные</h3><p class="hint" style="margin:0 0 12px">Вставьте текст резервной копии или выберите файл. Резервная копия заменит всё, что есть сейчас. Файл импорта, который готовит Claude, только добавит новые записи и ничего не удалит.</p><textarea class="in" id="rs" style="min-height:140px;font-size:12px" placeholder="Вставьте текст копии"></textarea><input type="file" accept=".json,application/json,text/plain" id="rf" hidden><div class="hint" id="rerr" style="color:var(--red)"></div><div class="actions"><button class="btn" data-file>Из файла</button><span class="sp"></span><button class="btn" data-x>Отмена</button><button class="btn pri" data-ok>Перенести</button></div>',function(m){
     var err=m.querySelector("#rerr");
     function done(txt){
-      try{var lost=applyBackup(JSON.parse(txt));closeModal();commit();
+      var d;try{d=JSON.parse(txt)}catch(e){err.textContent="Это не похоже на копию журнала. Проверьте, что текст вставлен целиком.";return}
+      if(d&&d.kind==="cat-journal-import"){var r=mergeImport(d);ui.sel="all";closeModal();commit();
+        setTimeout(function(){openModal('<h3>Добавлено ✓</h3><p class="hint" style="margin:0">Новых записей: '+r.added+'. Пропущено, потому что уже были: '+r.skipped+'.'+(r.upd?' Обновлены даты в карточках котов.':'')+(r.newCats?' Новых котов: '+r.newCats+'.':'')+' Всё, что было в журнале раньше, осталось на месте.</p><div class="actions"><span class="sp"></span><button class="btn pri" data-x>Отлично</button></div>',function(m2){m2.querySelector("[data-x]").onclick=closeModal})},300);return}
+      try{var lost=applyBackup(d);closeModal();commit();
         if(lost)setTimeout(function(){openModal('<h3>Готово ✓</h3><p class="hint" style="margin:0">Записи и аватарки перенесены. '+lost+' '+plural(lost,["фото","фото","фото"])+' из фотоленты нужно добавить заново: они лежали в старом журнале и в копию не входят.</p><div class="actions"><span class="sp"></span><button class="btn pri" data-x>Понятно</button></div>',function(m2){m2.querySelector("[data-x]").onclick=closeModal})},300)}
       catch(e){err.textContent="Это не похоже на копию журнала. Проверьте, что текст вставлен целиком."}
     }

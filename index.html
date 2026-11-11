@@ -465,6 +465,12 @@ a.btn{text-decoration:none;display:inline-block}
 .it-w em.up{color:var(--grn)}.it-w em.dn{color:var(--red)}
 .it-sep{color:var(--muted);font-weight:400}
 .spk{flex:none}
+.who-age{display:block;font-size:11.5px;font-weight:500;color:var(--muted);margin-top:-4px}
+.cat-it{margin-top:12px;margin-bottom:0}
+.it-s{font-size:12.5px;color:var(--muted)}
+.it-d{font-style:normal;font-size:12px;font-weight:600;margin-left:4px;color:var(--muted)}
+.it-d.up{color:var(--grn)}.it-d.dn{color:var(--red)}
+.it-link{border:none;background:none;padding:0;font:inherit;font-size:12.5px;font-weight:600;color:var(--acc);text-align:left}
 .ro{color:var(--amb);font-size:13px;padding:10px 14px;border-radius:16px;margin:12px 0}
 </style>
 </head>
@@ -859,6 +865,15 @@ function spark(ser){
   var X=function(d){return 3+(pd(d).getTime()-t0)/(t1-t0)*(W-6)},Y=function(v){return 4+(max-v)/(max-min)*(H-8)};
   return'<svg class="spk" viewBox="0 0 '+W+' '+H+'" width="'+W+'" height="'+H+'" aria-hidden="true">'+ser.map(function(s){if(!s.pts.length)return'';var l=s.pts[s.pts.length-1];return(s.pts.length>1?'<path d="'+s.pts.map(function(p,i){return(i?"L":"M")+X(p.d).toFixed(1)+","+Y(p.v).toFixed(1)}).join(" ")+'" fill="none" stroke="'+s.col+'" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>':'')+'<circle cx="'+X(l.d).toFixed(1)+'" cy="'+Y(l.v).toFixed(1)+'" r="3" fill="'+s.col+'"/>'}).join("")+'</svg>';
 }
+function catTiles(c){
+  var bdNext=nextAnn(c.birth);
+  var ag='<div class="it it-age"><span class="it-ic">🎂</span><div class="it-b"><span class="it-k">Возраст</span><span class="it-v">'+(c.birth?esc(age(c.birth)):'<span class="it-none">не указан</span>')+'</span>'+(bdNext?'<span class="it-s">день рождения '+pd(bdNext.date).toLocaleDateString("ru-RU",{day:"numeric",month:"long"})+(bdNext.days===0?' — сегодня 🎉':' · через '+dd(bdNext.days))+'</span>':(readOnly?'':'<button class="it-link" data-act="editcat" data-id="'+c.id+'">указать дату рождения</button>'))+'</div></div>';
+  var w=weights(c),wt;
+  if(!w.length)wt='<div class="it it-wt"><span class="it-ic">⚖️</span><div class="it-b"><span class="it-k">Вес</span><span class="it-v"><span class="it-none">нет взвешиваний</span></span></div></div>';
+  else{var l=w[w.length-1],p=w.length>1?w[w.length-2]:null,dv=p?Math.round((l.v-p.v)*100)/100:0,col=serCol(S.cats.indexOf(c));
+    wt='<button class="it it-wt" data-act="wbig" data-id="'+c.id+'"><span class="it-ic">⚖️</span><div class="it-b"><span class="it-k">Вес</span><span class="it-v">'+kg(l.v)+' <small>кг</small>'+(dv?'<em class="it-d '+(dv>0?"up":"dn")+'">'+(dv>0?"↑ +":"↓ ")+kg(Math.abs(dv))+'</em>':p?'<em class="it-d">без изменений</em>':'')+'</span><span class="it-s">'+fmt(l.d)+'</span></div>'+spark([{col:col,pts:w.slice()}])+'</button>'}
+  return'<div class="itiles cat-it">'+ag+wt+'</div>';
+}
 function infoTiles(){
   var ages=S.cats.map(function(c){return{c:c,a:c.birth?ageShort(c.birth):""}}),known=ages.filter(function(x){return x.a});
   var ageVal=!known.length?'<span class="it-none">не указан</span>':known.length===S.cats.length&&known.every(function(x){return x.a===known[0].a})?esc(known[0].a)+(S.cats.length>1?' <small>· '+(S.cats.length===2?'оба':'все')+'</small>':''):known.map(function(x){return'<span class="it-pair"><small>'+esc(x.c.name)+'</small> '+esc(x.a)+'</span>'}).join("");
@@ -892,8 +907,8 @@ function dashboard(rs){
   h+='<h2>Праздники</h2>'+celebCard(S.cats);
 
   /* сравнение котов */
-  h+='<h2>Сравнение котов</h2>'+infoTiles()+'<div class="dcard cmp"><table><tr><th></th>';
-  S.cats.forEach(function(c,i){h+='<th><button class="who" data-sel="'+c.id+'" style="--sc:'+serCol(i)+'"><span class="av" style="'+faceStyle(c)+'">'+face(c)+'</span><b>'+esc(c.name)+'</b></button></th>'});
+  h+='<h2>Сроки ухода</h2><div class="dcard cmp"><table><tr><th></th>';
+  S.cats.forEach(function(c,i){h+='<th><button class="who" data-sel="'+c.id+'" style="--sc:'+serCol(i)+'"><span class="av" style="'+faceStyle(c)+'">'+face(c)+'</span><b>'+esc(c.name)+'</b>'+(c.birth?'<small class="who-age">'+esc(ageShort(c.birth))+'</small>':'')+'</button></th>'});
   h+='</tr>';
   function row(label,fn){h+='<tr><td>'+label+'</td>';S.cats.forEach(function(c,i){h+='<td>'+fn(c,i)+'</td>'});h+='</tr>'}
   ["vacc","fleas","worms","claws"].forEach(function(k){row('<span class="e">'+TYPES[k].e+'</span>'+esc(TYPES[k].s||TYPES[k].l),function(c){return careCell(c,k)})});
@@ -1446,10 +1461,7 @@ function render(){
       var meta=[];if(c.sex)meta.push(c.sex);if(c.birth)meta.push("родил"+(c.sex==="кошка"?"ась ":"ся ")+fmt(c.birth));
       h+='<div class="hero"><div class="ph" style="'+faceStyle(c)+'">'+face(c)+'</div>'+(readOnly?'':'<button class="ed" data-act="editcat" data-id="'+c.id+'">'+(c.photo?'Изменить':'＋ Фото')+'</button>')+'<div class="cap"><div class="nm">'+esc(c.name)+'</div>'+(meta.length?'<div class="mt">'+esc(meta.join(" · "))+'</div>':'')+'</div></div>';
       if(c.notes)h+='<div class="notes">'+esc(c.notes)+'</div>';
-      var w=weights(c),nx=rs[0];
-      h+='<div class="stats"><div class="stat"><div class="k">Возраст</div><div class="v">'+esc(ageShort(c.birth))+'</div></div>'+
-        '<div class="stat"><div class="k">Вес</div><div class="v">'+(w.length?kg(w[w.length-1].v)+' кг':'—')+'</div>'+(w.length?'<div class="s">'+fmtShort(w[w.length-1].d)+'</div>':'')+'</div>'+
-        '<div class="stat"><div class="k">Ближайшее</div><div class="v">'+(nx?TYPES[nx.type].e+' '+(nx.days<=0?'<span style="color:var(--red)">!</span>':fmtShort(nx.due)):'—')+'</div>'+(nx?'<div class="s">'+esc(TYPES[nx.type].s||TYPES[nx.type].l)+'</div>':'')+'</div></div>';
+      h+=catTiles(c);
       h+=todayMeds(c.id);
       h+='<h2>Что дальше</h2>';
       if(!rs.length)h+='<div class="empty">Пока нечего напоминать. Запишите прививку, обработку или стрижку когтей, и здесь появится дата следующей.</div>';

@@ -422,6 +422,49 @@ a.btn{text-decoration:none;display:inline-block}
 .sy-code{font-size:30px;font-weight:800;letter-spacing:5px;text-align:center;padding:14px;border-radius:18px;background:var(--soft);font-variant-numeric:tabular-nums}
 .sy-m{padding:8px 0;border-top:1px solid var(--soft);font-size:14.5px}
 .sy-m:first-of-type{border-top:none}
+.lt{background:var(--card);border:1px solid var(--cb);box-shadow:var(--sh2);border-radius:20px;padding:2px 14px;margin:6px 0}
+.lt-g{font-size:11.5px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;padding:12px 0 4px}
+.lt-r{display:flex;align-items:center;gap:10px;width:100%;border:none;border-top:1px solid var(--soft);background:none;padding:9px 0;text-align:left;font:inherit;color:var(--ink)}
+.lt-g+.lt-r{border-top:none}
+.lt-n{flex:1;min-width:0;font-size:14px}
+.lt-n b{font-weight:600;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.lt-n small{display:block;font-size:11.5px;color:var(--muted)}
+.lt-v{font-weight:700;font-size:14.5px;white-space:nowrap;font-variant-numeric:tabular-nums;display:inline-flex;align-items:center}
+.lt-v small{font-weight:500;font-size:11.5px;color:var(--muted);margin-left:3px}
+.lt-ref{width:78px;text-align:right;font-size:12px;color:var(--muted);flex:none}
+.lt-cells{display:flex;flex-direction:column;align-items:flex-end;gap:3px}
+.lt-r.out .lt-v{color:var(--red)}
+.lf{display:inline-flex;align-items:center;justify-content:center;width:18px;height:18px;border-radius:50%;font-size:11px;font-weight:800;margin-right:5px}
+.lf.hi{background:var(--redsoft);color:var(--red)}.lf.lo{background:rgba(47,127,168,.15);color:#2f7fa8}
+.lt-r.out .lf.lo~*{color:inherit}
+.out-n{font-style:normal;color:var(--red);font-weight:600}
+.lab-h{display:flex;align-items:center;gap:10px;margin:16px 2px 4px}
+.lab-h b{font-size:16px}
+.lab-h .hint{flex:1}
+.le-r{background:var(--card);border:1px solid var(--cb);border-radius:16px;padding:8px;margin-bottom:8px}
+.le-r .in{min-height:40px;padding:8px 10px;font-size:14.5px;box-shadow:none}
+.le-x{border:none;background:var(--redsoft);color:var(--red);border-radius:12px;width:40px;flex:none !important;font-size:20px}
+.lt-row{grid-template-columns:110px 1fr auto;border-left:none;border-right:none;border-bottom:none;background:none;width:100%;text-align:left;font:inherit;color:var(--ink)}
+.itiles{display:flex;flex-direction:column;gap:10px;margin-bottom:12px}
+.it{display:flex;align-items:center;gap:12px;border-radius:22px;padding:12px 14px;border:1px solid var(--cb);box-shadow:var(--sh2);width:100%;text-align:left;font:inherit;color:var(--ink)}
+.it-age{background:linear-gradient(135deg,rgba(255,200,220,.55),rgba(255,228,210,.55)),var(--card)}
+.it-wt{background:linear-gradient(135deg,rgba(159,227,207,.5),rgba(194,232,243,.45)),var(--card)}
+@media(prefers-color-scheme:dark){.it-age{background:linear-gradient(135deg,rgba(224,71,158,.18),rgba(255,140,90,.12)),var(--card)}.it-wt{background:linear-gradient(135deg,rgba(35,160,130,.2),rgba(47,127,168,.15)),var(--card)}}
+.it-ic{width:44px;height:44px;border-radius:15px;display:flex;align-items:center;justify-content:center;font-size:22px;flex:none;background:rgba(255,255,255,.7);box-shadow:inset 0 1px 0 rgba(255,255,255,.9)}
+@media(prefers-color-scheme:dark){.it-ic{background:rgba(255,255,255,.1);box-shadow:none}.it-age .it-k{color:#ff8cc8}}
+.it-b{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}
+.it-k{font-size:12.5px;font-weight:600;color:var(--muted)}
+.it-age .it-k{color:var(--pink,#c2347f)}.it-wt .it-k{color:var(--grn)}
+.it-v{font-size:17px;font-weight:700;letter-spacing:-.3px;display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 6px}
+.it-v small{font-size:12.5px;font-weight:500;color:var(--muted)}
+.it-none{font-size:14px;font-weight:500;color:var(--muted)}
+.it-pair{white-space:nowrap}
+.it-w{display:inline-flex;align-items:baseline;gap:5px;white-space:nowrap}
+.it-w i{width:8px;height:8px;border-radius:50%;display:inline-block;align-self:center}
+.it-w em{font-style:normal;font-size:11.5px;font-weight:600}
+.it-w em.up{color:var(--grn)}.it-w em.dn{color:var(--red)}
+.it-sep{color:var(--muted);font-weight:400}
+.spk{flex:none}
 .ro{color:var(--amb);font-size:13px;padding:10px 14px;border-radius:16px;margin:12px 0}
 </style>
 </head>
@@ -531,16 +574,18 @@ var CH={},chN=0,WR=[["3m","3 мес"],["6m","полгода"],["1y","год"],["
 function rangeFrom(r){var t=today();return r==="3m"?addDays(t,-91):r==="6m"?addDays(t,-182):r==="1y"?addDays(t,-365):"0000-00-00"}
 function wSeries(key){return(key==="all"?S.cats:[cat(key)]).filter(Boolean).map(function(c,i){return{name:c.name,col:key==="all"?serCol(S.cats.indexOf(c)):(c.color||"#ff6b3d"),pts:weights(c)}}).filter(function(x){return x.pts.length})}
 function wRangeBtns(){return'<div class="wr">'+WR.map(function(r){return'<button class="'+((ui.wr||"all")===r[0]?"on":"")+'" data-wr="'+r[0]+'">'+r[1]+'</button>'}).join("")+'</div>'}
-function niceStep(span){var c=[.1,.2,.25,.5,1,2,5];for(var i=0;i<c.length;i++)if(span/c[i]<=4)return c[i];return 10}
-function wChart(serAll,big){
-  var from=rangeFrom(ui.wr||"all");
+function niceStep(span){var c=[.01,.02,.05,.1,.2,.25,.5,1,2,5,10,20,25,50,100,200,250,500,1000,2000,5000];for(var i=0;i<c.length;i++)if(span/c[i]<=4)return c[i];return 10000}
+function wChart(serAll,big,o){
+  o=o||{};var unit=o.unit!=null?o.unit:"кг",band=o.band||{};
+  var from=o.noRange?"0000":rangeFrom(ui.wr||"all");
   var ser=serAll.map(function(s){return{name:s.name,col:s.col,pts:s.pts.filter(function(p){return p.d>=from})}}).filter(function(s){return s.pts.length});
-  if(!ser.length)return'<div class="hint" style="margin:6px 0">В этом периоде взвешиваний нет. Выберите период подлиннее.</div>';
+  if(!ser.length)return'<div class="hint" style="margin:6px 0">'+(o.empty||'В этом периоде взвешиваний нет. Выберите период подлиннее.')+'</div>';
   var dm={};ser.forEach(function(s){s.pts.forEach(function(p){dm[p.d]=1})});var ds=Object.keys(dm).sort();
-  if(ds.length<2)return'<div class="hint" style="margin:6px 0">Добавьте ещё одно взвешивание, и появится график.</div>';
+  if(ds.length<2)return'<div class="hint" style="margin:6px 0">'+(o.empty||'Добавьте ещё одно взвешивание, и появится график.')+'</div>';
   var id="ch"+(++chN),W=600,H=big?360:240,pl=52,pr=18,pt=18,pb=38,min=Infinity,max=-Infinity;
   ser.forEach(function(s){s.pts.forEach(function(p){min=Math.min(min,p.v);max=Math.max(max,p.v)})});
-  var st=niceStep(Math.max(.2,max-min)),lo=Math.floor(min/st)*st,hi=Math.ceil(max/st)*st;if(hi===lo){hi+=st;lo=Math.max(0,lo-st)}
+  if(band.lo!=null){min=Math.min(min,band.lo);max=Math.max(max,band.lo)}if(band.hi!=null){min=Math.min(min,band.hi);max=Math.max(max,band.hi)}
+  var st=niceStep(Math.max(o.unit!=null?(max-min)||Math.abs(max)*.2||1:.2,max-min)),lo=Math.floor(min/st)*st,hi=Math.ceil(max/st)*st;if(hi===lo){hi+=st;lo=Math.max(0,lo-st)}
   var t0=pd(ds[0]).getTime(),t1=pd(ds[ds.length-1]).getTime();
   var X=function(d){return pl+(pd(d).getTime()-t0)/(t1-t0)*(W-pl-pr)},Y=function(v){return pt+(hi-v)/(hi-lo)*(H-pt-pb)};
   var g='';
@@ -551,16 +596,17 @@ function wChart(serAll,big){
   ticks.filter(function(_,i){return i%stp===0}).forEach(function(d){var x=X(d).toFixed(1),lb=pd(d).toLocaleDateString("ru-RU",{month:"short"}).replace(".","");if(d.slice(5,7)==="01")lb+=" "+d.slice(2,4);
     g+='<line class="gl" x1="'+x+'" x2="'+x+'" y1="'+(H-pb)+'" y2="'+(H-pb+6)+'"/><text class="tx" x="'+x+'" y="'+(H-8)+'" text-anchor="middle" font-size="17">'+lb+'</text>'});
   var body='';
+  if(band.lo!=null||band.hi!=null){var by1=Y(band.hi!=null?band.hi:hi),by2=Y(band.lo!=null?band.lo:lo);body+='<rect x="'+pl+'" y="'+Math.min(by1,by2).toFixed(1)+'" width="'+(W-pl-pr)+'" height="'+Math.abs(by2-by1).toFixed(1)+'" fill="#23a055" fill-opacity=".12"/>'}
   ser.forEach(function(s,i){
     var line=s.pts.map(function(p,j){return(j?"L":"M")+X(p.d).toFixed(1)+","+Y(p.v).toFixed(1)}).join(" ");
-    if(ser.length===1&&s.pts.length>1)body+='<path d="'+line+' L'+X(s.pts[s.pts.length-1].d).toFixed(1)+','+(H-pb)+' L'+X(s.pts[0].d).toFixed(1)+','+(H-pb)+' Z" fill="'+s.col+'" fill-opacity=".14"/>';
+    if(ser.length===1&&s.pts.length>1&&!o.unit)body+='<path d="'+line+' L'+X(s.pts[s.pts.length-1].d).toFixed(1)+','+(H-pb)+' L'+X(s.pts[0].d).toFixed(1)+','+(H-pb)+' Z" fill="'+s.col+'" fill-opacity=".14"/>';
     if(s.pts.length>1)body+='<path d="'+line+'" fill="none" stroke="'+s.col+'" stroke-width="4.5" stroke-linejoin="round" stroke-linecap="round"/>';
     s.pts.forEach(function(p){body+='<circle cx="'+X(p.d).toFixed(1)+'" cy="'+Y(p.v).toFixed(1)+'" r="'+(big?5.5:5)+'" fill="#fff" stroke="'+s.col+'" stroke-width="3.5"/>'});
   });
   var cur2='<line class="cx" x1="0" x2="0" y1="'+pt+'" y2="'+(H-pb)+'" style="display:none"/>'+ser.map(function(s,i){return'<circle class="cc" data-i="'+i+'" r="9" fill="'+s.col+'" stroke="#fff" stroke-width="3" style="display:none"/>'}).join("");
-  CH[id]={ser:ser,ds:ds,X:X,Y:Y,W:W};
+  CH[id]={ser:ser,ds:ds,X:X,Y:Y,W:W,unit:unit};
   return'<div class="wchart" data-ch="'+id+'"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 '+W+' '+H+'">'+g+body+cur2+'</svg><div class="wtip"></div></div>'+
-    '<div class="hint wch-h">Проведите пальцем по графику, чтобы увидеть вес в нужную дату.</div>';
+    '<div class="hint wch-h">'+(o.hint||'Проведите пальцем по графику, чтобы увидеть вес в нужную дату.')+'</div>';
 }
 function chScrub(el,clientX){
   var c=CH[el.dataset.ch];if(!c)return;
@@ -570,7 +616,7 @@ function chScrub(el,clientX){
   var rows='';
   c.ser.forEach(function(s,i){var p=s.pts.filter(function(q){return q.d===best})[0],cc=svg.querySelector('.cc[data-i="'+i+'"]');
     if(p){cc.setAttribute("cx",bx);cc.setAttribute("cy",c.Y(p.v));cc.style.display=""}else cc.style.display="none";
-    rows+='<span><i style="background:'+s.col+'"></i>'+(c.ser.length>1?esc(s.name)+': ':'')+'<b>'+(p?kg(p.v)+' кг':'—')+'</b></span>'});
+    rows+='<span><i style="background:'+s.col+'"></i>'+(c.ser.length>1?esc(s.name)+': ':'')+'<b>'+(p?nf(p.v)+(c.unit?' '+esc(c.unit):''):'—')+'</b></span>'});
   var tip=el.querySelector(".wtip");tip.innerHTML='<em>'+fmt(best)+'</em>'+rows;tip.style.display="block";
   var w=tip.offsetWidth,px=bx/c.W*r.width;tip.style.left=Math.max(w/2,Math.min(r.width-w/2,px))+"px";
 }
@@ -804,6 +850,23 @@ function photoView(p){
   });
 }
 
+/* плитки «Возраст» и «Вес» на сводке */
+function spark(ser){
+  var all=[];ser.forEach(function(s){s.pts=s.pts.slice(-10);s.pts.forEach(function(p){all.push(p)})});
+  if(all.length<2)return'';
+  var W=84,H=34,min=Infinity,max=-Infinity,ds=all.map(function(p){return p.d}).sort();all.forEach(function(p){min=Math.min(min,p.v);max=Math.max(max,p.v)});if(max===min){max+=1;min-=1}
+  var t0=pd(ds[0]).getTime(),t1=pd(ds[ds.length-1]).getTime()||t0+1;if(t1===t0)t1=t0+1;
+  var X=function(d){return 3+(pd(d).getTime()-t0)/(t1-t0)*(W-6)},Y=function(v){return 4+(max-v)/(max-min)*(H-8)};
+  return'<svg class="spk" viewBox="0 0 '+W+' '+H+'" width="'+W+'" height="'+H+'" aria-hidden="true">'+ser.map(function(s){if(!s.pts.length)return'';var l=s.pts[s.pts.length-1];return(s.pts.length>1?'<path d="'+s.pts.map(function(p,i){return(i?"L":"M")+X(p.d).toFixed(1)+","+Y(p.v).toFixed(1)}).join(" ")+'" fill="none" stroke="'+s.col+'" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>':'')+'<circle cx="'+X(l.d).toFixed(1)+'" cy="'+Y(l.v).toFixed(1)+'" r="3" fill="'+s.col+'"/>'}).join("")+'</svg>';
+}
+function infoTiles(){
+  var ages=S.cats.map(function(c){return{c:c,a:c.birth?ageShort(c.birth):""}}),known=ages.filter(function(x){return x.a});
+  var ageVal=!known.length?'<span class="it-none">не указан</span>':known.length===S.cats.length&&known.every(function(x){return x.a===known[0].a})?esc(known[0].a)+(S.cats.length>1?' <small>· '+(S.cats.length===2?'оба':'все')+'</small>':''):known.map(function(x){return'<span class="it-pair"><small>'+esc(x.c.name)+'</small> '+esc(x.a)+'</span>'}).join("");
+  var ws=wSeries("all"),wVal=!ws.length?'<span class="it-none">нет взвешиваний</span>':ws.map(function(s){var l=s.pts[s.pts.length-1],p=s.pts.length>1?s.pts[s.pts.length-2]:null,dv=p?Math.round((l.v-p.v)*100)/100:0;return'<span class="it-w"><i style="background:'+s.col+'"></i>'+kg(l.v)+(dv?'<em class="'+(dv>0?"up":"dn")+'">'+(dv>0?"↑":"↓")+kg(Math.abs(dv))+'</em>':'')+'</span>'}).join('<span class="it-sep">·</span>')+' <small>кг</small>';
+  var sp=spark(ws.map(function(s){return{col:s.col,pts:s.pts.slice()}}));
+  return'<div class="itiles"><div class="it it-age"><span class="it-ic">🎂</span><div class="it-b"><span class="it-k">Возраст</span><span class="it-v">'+ageVal+'</span></div></div>'+
+    '<button class="it it-wt" data-act="wbig" data-id="all"><span class="it-ic">⚖️</span><div class="it-b"><span class="it-k">Вес</span><span class="it-v">'+wVal+'</span></div>'+sp+'</button></div>';
+}
 /* ---------- дашборд ---------- */
 var SER=["#ff6b3d","#7c5cff","#14a38b","#e0479e","#d4a017","#2f7fa8"];
 function serCol(i){return SER[i%SER.length]}
@@ -829,12 +892,10 @@ function dashboard(rs){
   h+='<h2>Праздники</h2>'+celebCard(S.cats);
 
   /* сравнение котов */
-  h+='<h2>Сравнение котов</h2><div class="dcard cmp"><table><tr><th></th>';
+  h+='<h2>Сравнение котов</h2>'+infoTiles()+'<div class="dcard cmp"><table><tr><th></th>';
   S.cats.forEach(function(c,i){h+='<th><button class="who" data-sel="'+c.id+'" style="--sc:'+serCol(i)+'"><span class="av" style="'+faceStyle(c)+'">'+face(c)+'</span><b>'+esc(c.name)+'</b></button></th>'});
   h+='</tr>';
   function row(label,fn){h+='<tr><td>'+label+'</td>';S.cats.forEach(function(c,i){h+='<td>'+fn(c,i)+'</td>'});h+='</tr>'}
-  row("Возраст",function(c){return c.birth?'<span class="big">'+esc(ageShort(c.birth))+'</span>':'<span class="cell none">не указан</span>'});
-  row("Вес",function(c){var w=weights(c);if(!w.length)return'<span class="cell none">нет данных</span>';var l=w[w.length-1];return'<span class="big">'+kg(l.v)+' кг</span><span class="sm">'+fmtShort(l.d)+'</span>'});
   ["vacc","fleas","worms","claws"].forEach(function(k){row('<span class="e">'+TYPES[k].e+'</span>'+esc(TYPES[k].s||TYPES[k].l),function(c){return careCell(c,k)})});
   row('<span class="e">'+TYPES.vet.e+'</span>Врач',function(c){var l=lastOf(c.id,"vet");return l?'<span class="cell">'+fmtShort(l.date)+'</span>':'<span class="cell none">не было</span>'});
   h+='</table></div><div class="hint">Нажмите на кота, чтобы открыть его страницу.'+(!readOnly&&S.cats.some(function(k){return!k.photo})?' Там же можно добавить фото.':'')+'</div>';
@@ -997,38 +1058,123 @@ var DKINDS=[["lab","Анализы","🧪"],["xray","Рентген","🩻"],["u
 function dkind(k){for(var i=0;i<DKINDS.length;i++)if(DKINDS[i][0]===k)return DKINDS[i];return DKINDS[DKINDS.length-1]}
 function fsize(n){return n>1048576?(Math.round(n/104857.6)/10).toLocaleString("ru-RU")+" МБ":Math.max(1,Math.round(n/1024))+" КБ"}
 function isImg(d){return/^image\//.test(d.mime||"")}
-function docsList(sel){return(S.docs||[]).filter(function(d){return urlCache[d.a]&&(sel==="all"||d.cats.indexOf(sel)>=0)&&(ui.dk==null||ui.dk==="all"||d.kind===ui.dk)}).sort(function(a,b){return a.date<b.date?1:a.date>b.date?-1:(b.t||0)-(a.t||0)})}
+/* ---------- показатели анализов ---------- */
+function nf(v){return v==null||v===""||isNaN(v)?"":(Math.round(v*1000)/1000).toLocaleString("ru-RU")}
+function labFlag(r){if(typeof r.v!=="number"||isNaN(r.v))return"";if(r.hi!=null&&r.v>r.hi&&!/^[≤<]/.test(r.t||""))return"hi";if(r.lo!=null&&r.v<r.lo&&!/^[≥>]/.test(r.t||""))return"lo";return""}
+function labRef(r){return r.lo!=null&&r.hi!=null?nf(r.lo)+"–"+nf(r.hi):r.hi!=null?"≤ "+nf(r.hi):r.lo!=null?"≥ "+nf(r.lo):""}
+function labVal(r){return esc(String(r.t!=null&&r.t!==""?r.t:nf(r.v)).replace(".",","))}
+function flagHtml(f){return f==="hi"?'<span class="lf hi">↑</span>':f==="lo"?'<span class="lf lo">↓</span>':''}
+function indKey(r){return String(r.c||r.n||"").trim()}
+function labOut(d){return(d.labs||[]).filter(function(r){return labFlag(r)}).length}
+function labTable(d){
+  var h='<div class="lt">',g=null;
+  (d.labs||[]).forEach(function(r){
+    if((r.g||"")!==g){g=r.g||"";if(g)h+='<div class="lt-g">'+esc(g)+'</div>'}
+    var f=labFlag(r);
+    h+='<button class="lt-r'+(f?" out":"")+'" data-ind="'+esc(indKey(r))+'"><span class="lt-n"><b>'+esc(r.n||r.c)+'</b>'+(r.c&&r.n?'<small>'+esc(r.c)+'</small>':'')+'</span><span class="lt-v">'+flagHtml(f)+labVal(r)+(r.u?' <small>'+esc(r.u)+'</small>':'')+'</span><span class="lt-ref">'+esc(labRef(r))+'</span></button>';
+  });
+  return h+'</div>';
+}
+function labDocs(ids){return(S.docs||[]).filter(function(d){return d.labs&&d.labs.length&&d.cats.some(function(c){return ids.indexOf(c)>=0})})}
+function selIds(sel){return sel==="all"?S.cats.map(function(c){return c.id}):[sel]}
+function indicatorsView(sel){
+  var ids=selIds(sel),docs=labDocs(ids).sort(function(a,b){return a.date<b.date?-1:1}),map={},order=[];
+  docs.forEach(function(d){d.labs.forEach(function(r){var k=indKey(r);if(!k)return;if(!map[k]){map[k]={k:k,g:r.g||"",n:r.n||r.c,c:r.c,last:{},cnt:0};order.push(k)}var m=map[k];m.cnt++;d.cats.forEach(function(cid){if(ids.indexOf(cid)>=0)m.last[cid]={r:r,d:d.date}})})});
+  if(!order.length)return'<div class="empty">Показателей пока нет. Откройте документ с анализами и нажмите «✏️ Показатели».</div>';
+  var h='<div class="hint" style="margin:0 6px 10px">Последнее значение каждого показателя. Нажмите на строку, чтобы увидеть, как он менялся. Нормы взяты с бланков лаборатории.</div><div class="lt">',g=null;
+  order.forEach(function(k){var m=map[k];
+    if(m.g!==g){g=m.g;if(g)h+='<div class="lt-g">'+esc(g)+'</div>'}
+    var cells=Object.keys(m.last).map(function(cid){var x=m.last[cid],c=cat(cid),f=labFlag(x.r);return'<span class="lt-v">'+(ids.length>1&&c?'<span class="cr-av" style="margin-right:4px"><span style="'+faceStyle(c)+'">'+face(c)+'</span></span>':'')+flagHtml(f)+labVal(x.r)+(x.r.u?' <small>'+esc(x.r.u)+'</small>':'')+'</span>'}).join("");
+    var any=Object.keys(m.last).some(function(cid){return labFlag(m.last[cid].r)});
+    h+='<button class="lt-r'+(any?" out":"")+'" data-ind="'+esc(k)+'"><span class="lt-n"><b>'+esc(m.n)+'</b><small>'+(m.c&&m.c!==m.n?esc(m.c)+' · ':'')+m.cnt+' '+plural(m.cnt,["измерение","измерения","измерений"])+'</small></span><span class="lt-cells">'+cells+'</span></button>'});
+  return h+'</div>';
+}
+function indHistory(key,sel){
+  var ids=selIds(sel),docs=labDocs(ids).sort(function(a,b){return a.date<b.date?-1:1}),ser={},last=null,rows=[];
+  docs.forEach(function(d){d.labs.forEach(function(r){if(indKey(r)!==key)return;last=r;
+    d.cats.forEach(function(cid){if(ids.indexOf(cid)<0)return;var c=cat(cid);if(!c)return;
+      if(!ser[cid])ser[cid]={name:c.name,col:ids.length>1?serCol(S.cats.indexOf(c)):(c.color||"#ff6b3d"),pts:[]};
+      if(typeof r.v==="number"&&!isNaN(r.v))ser[cid].pts.push({d:d.date,v:r.v});rows.push({d:d.date,c:c,r:r,doc:d})})})});
+  if(!last)return;
+  var S2=Object.keys(ser).map(function(k){return ser[k]});
+  var h='<h3>'+esc(last.n||last.c)+'</h3><p class="hint" style="margin:-8px 0 6px">'+(last.c&&last.n?esc(last.c)+' · ':'')+(last.u?esc(last.u)+' · ':'')+(labRef(last)?'норма '+esc(labRef(last)):'норма не указана')+'</p>';
+  if(S2.length>1)h+='<div class="legend">'+S2.map(function(s){return'<span><i style="background:'+s.col+'"></i>'+esc(s.name)+'</span>'}).join("")+'</div>';
+  h+=wChart(S2,true,{unit:last.u||"",band:{lo:last.lo,hi:last.hi},noRange:true,empty:"Пока одно измерение. Когда появится следующий анализ, здесь будет график.",hint:"Проведите пальцем по графику, чтобы увидеть значение. Зелёная полоса — норма по бланку."});
+  h+='<div class="wtab">';rows.slice().reverse().forEach(function(x){var f=labFlag(x.r);h+='<button class="wt-r lt-row" data-doc="'+x.doc.id+'"><span>'+dmy(x.d)+'</span>'+(ids.length>1?'<span>'+esc(x.c.name)+'</span>':'')+'<span><b>'+flagHtml(f)+labVal(x.r)+'</b>'+(x.r.u?' <small>'+esc(x.r.u)+'</small>':'')+'</span></button>'});h+='</div>';
+  h+='<p class="hint">Журнал только сравнивает число с нормой с бланка. Что значит отклонение, решает ветеринар.</p><div class="actions"><span class="sp"></span><button class="btn pri" data-x>Готово</button></div>';
+  openModal(h,function(m){m.querySelector("[data-x]").onclick=closeModal;
+    m.addEventListener("click",function(ev){var b=ev.target.closest("[data-doc]");if(!b)return;var dc=(S.docs||[]).filter(function(x){return x.id===b.dataset.doc})[0];if(dc){closeModal();docForm(dc)}})});
+}
+function parseNorm(s){s=String(s||"").replace(/,/g,".").trim();var m;
+  if((m=/^([\d.]+)\s*[-–—]\s*([\d.]+)/.exec(s)))return{lo:+m[1],hi:+m[2]};
+  if((m=/^(?:≤|<=|<|до)\s*([\d.]+)/i.exec(s)))return{lo:null,hi:+m[1]};
+  if((m=/^(?:≥|>=|>|от)\s*([\d.]+)/i.exec(s)))return{lo:+m[1],hi:null};
+  return{lo:null,hi:null}}
+function labEditor(d){
+  var rows=(d.labs||[]).map(function(r){return JSON.parse(JSON.stringify(r))});
+  function rowHtml(r,i){return'<div class="le-r" data-i="'+i+'"><div class="row"><div style="flex:2"><input class="in" data-f="n" value="'+esc(r.n||"")+'" placeholder="Название, напр. Креатинин"></div><div style="flex:1"><input class="in" data-f="c" value="'+esc(r.c||"")+'" placeholder="Код: CRE"></div></div>'+
+    '<div class="row" style="margin-top:6px"><div><input class="in" data-f="t" value="'+esc(r.t!=null?r.t:nf(r.v))+'" placeholder="Значение" inputmode="decimal"></div><div><input class="in" data-f="u" value="'+esc(r.u||"")+'" placeholder="Ед."></div><div><input class="in" data-f="ref" value="'+esc(labRef(r))+'" placeholder="Норма 39–145"></div><button class="le-x" data-del="'+i+'" aria-label="Удалить">×</button></div></div>'}
+  function body(){
+    var prev=labDocs(d.cats).filter(function(x){return x.id!==d.id}).sort(function(a,b){return a.date<b.date?1:-1})[0];
+    return'<h3>Показатели</h3><p class="hint" style="margin:-8px 0 12px">Норму пишите как на бланке: «39–145», «≤ 25» или «≥ 2». Значение можно с запятой.</p>'+
+      (!rows.length&&prev?'<button class="btn" data-copy style="width:100%;margin-bottom:10px">Взять список из анализа '+dmy(prev.date)+'</button>':'')+
+      '<div id="le">'+rows.map(rowHtml).join("")+'</div><button class="btn" data-add style="width:100%;margin-top:8px">＋ Показатель</button>'+
+      '<div class="actions"><span class="sp"></span><button class="btn" data-x>Отмена</button><button class="btn pri" data-ok>Сохранить</button></div>'}
+  openModal(body(),function m0(m){
+    function read(){m.querySelectorAll(".le-r").forEach(function(el){var r=rows[+el.dataset.i];el.querySelectorAll("[data-f]").forEach(function(i){r["_"+i.dataset.f]=i.value})})}
+    function bind(){
+      m.querySelector("[data-x]").onclick=closeModal;
+      var cp=m.querySelector("[data-copy]");if(cp)cp.onclick=function(){var prev=labDocs(d.cats).filter(function(x){return x.id!==d.id}).sort(function(a,b){return a.date<b.date?1:-1})[0];rows=prev.labs.map(function(r){return{g:r.g,c:r.c,n:r.n,u:r.u,lo:r.lo,hi:r.hi,t:"",v:null}});m.innerHTML=body();bind()};
+      m.querySelector("[data-add]").onclick=function(){read();rows.forEach(apply);rows.push({g:rows.length?rows[rows.length-1].g:"",n:"",c:"",t:"",u:"",lo:null,hi:null});m.innerHTML=body();bind();var l=m.querySelectorAll(".le-r");if(l.length)l[l.length-1].querySelector("input").focus()};
+      m.querySelectorAll("[data-del]").forEach(function(b){b.onclick=function(){read();rows.forEach(apply);rows.splice(+b.dataset.del,1);m.innerHTML=body();bind()}});
+      m.querySelector("[data-ok]").onclick=function(){read();rows.forEach(apply);d.labs=rows.filter(function(r){return(r.n||r.c)&&r.t!==""}).map(function(r){return{g:r.g||"",c:r.c||"",n:r.n||"",t:r.t,v:r.v,u:r.u||"",lo:r.lo,hi:r.hi}});closeModal();commit()};
+    }
+    function apply(r){if(r._n===undefined)return;r.n=r._n.trim();r.c=r._c.trim();r.t=r._t.trim();r.u=r._u.trim();var v=parseFloat(r.t.replace(",",".").replace(/^[≤<≥>]\s*/,""));r.v=isNaN(v)?null:v;var nm=parseNorm(r._ref);r.lo=nm.lo;r.hi=nm.hi;delete r._n;delete r._c;delete r._t;delete r._u;delete r._ref}
+    bind();
+  });
+}
+
+function docsList(sel){return(S.docs||[]).filter(function(d){return(!d.a||urlCache[d.a])&&(sel==="all"||d.cats.indexOf(sel)>=0)&&(ui.dk==null||ui.dk==="all"||ui.dk==="ind"||d.kind===ui.dk)}).sort(function(a,b){return a.date<b.date?1:a.date>b.date?-1:(b.t||0)-(a.t||0)})}
+function docThumb(d){if(!d.a||!urlCache[d.a])return'<span style="font-size:24px">'+dkind(d.kind)[2]+'</span>';return isImg(d)?'<img src="'+esc(urlCache[d.a])+'" alt="" loading="lazy">':'<span class="pdf">'+(/pdf/.test(d.mime||"")?"PDF":"FILE")+'</span>'}
 function docsView(sel){
-  var all=(S.docs||[]).filter(function(d){return urlCache[d.a]&&(sel==="all"||d.cats.indexOf(sel)>=0)});
+  var all=(S.docs||[]).filter(function(d){return(!d.a||urlCache[d.a])&&(sel==="all"||d.cats.indexOf(sel)>=0)});
   var h='';
-  if(!all.length)return'<div class="empty" style="margin-top:14px">Здесь будут анализы, рентген, УЗИ и заключения врачей. Можно добавить PDF или фото документа, отметить, чей он и от какого числа.</div>'+(readOnly?'':'<div style="margin-top:12px"><button class="btn pri" data-act="adddoc">＋ Добавить документ</button></div>');
-  var kinds={};all.forEach(function(d){kinds[d.kind]=1});
-  h+='<div class="filters" style="margin-top:14px"><button class="f'+(!ui.dk||ui.dk==="all"?" on":"")+'" data-dk="all">Все</button>';
+  if(!all.length)return'<div class="empty" style="margin-top:14px">Здесь будут анализы, рентген, УЗИ и заключения врачей. Можно добавить PDF или фото документа, отметить, чей он и от какого числа. У анализов можно выписать показатели и смотреть, как они меняются.</div>'+(readOnly?'':'<div style="margin-top:12px"><button class="btn pri" data-act="adddoc">＋ Добавить документ</button></div>');
+  var kinds={},hasLabs=all.some(function(d){return d.labs&&d.labs.length});all.forEach(function(d){kinds[d.kind]=1});
+  h+='<div class="filters" style="margin-top:14px"><button class="f'+(!ui.dk||ui.dk==="all"?" on":"")+'" data-dk="all">Все</button>'+(hasLabs?'<button class="f'+(ui.dk==="ind"?" on":"")+'" data-dk="ind">📈 Показатели</button>':'');
   DKINDS.forEach(function(k){if(kinds[k[0]])h+='<button class="f'+(ui.dk===k[0]?" on":"")+'" data-dk="'+k[0]+'">'+k[2]+' '+k[1]+'</button>'});
   h+='</div>';
+  if(ui.dk==="ind"&&hasLabs)return h+indicatorsView(sel);
   var ds=docsList(sel),lastY="";
-  ds.forEach(function(d){var y=d.date.slice(0,4),K=dkind(d.kind);
+  ds.forEach(function(d){var y=d.date.slice(0,4),K=dkind(d.kind),n=(d.labs||[]).length,o=labOut(d);
     if(y!==lastY){h+='<div class="month">'+y+'</div>';lastY=y}
-    h+='<button class="doc" data-doc="'+d.id+'"><span class="doc-th">'+(isImg(d)?'<img src="'+esc(urlCache[d.a])+'" alt="" loading="lazy">':'<span class="pdf">'+(/pdf/.test(d.mime||"")?"PDF":"FILE")+'</span>')+'</span><span class="t"><b>'+esc(d.title||K[1])+'</b><span>'+K[2]+' '+esc(K[1])+' · '+dmy(d.date)+'</span>'+(d.note?'<small>'+esc(d.note)+'</small>':'')+'</span>'+(sel==="all"&&S.cats.length>1?miniAvs(d.cats.map(cat).filter(Boolean)):'')+'</button>'});
+    h+='<button class="doc" data-doc="'+d.id+'"><span class="doc-th">'+docThumb(d)+'</span><span class="t"><b>'+esc(d.title||K[1])+'</b><span>'+K[2]+' '+esc(K[1])+' · '+dmy(d.date)+'</span>'+(n?'<small>'+n+' '+plural(n,["показатель","показателя","показателей"])+(o?' · <em class="out-n">'+o+' вне нормы</em>':' · всё в норме')+'</small>':d.note?'<small>'+esc(d.note)+'</small>':'')+'</span>'+(sel==="all"&&S.cats.length>1?miniAvs(d.cats.map(cat).filter(Boolean)):'')+'</button>'});
   if(!ds.length)h+='<div class="empty">В этой категории пока пусто.</div>';
-  h+='<div class="hint">Документы хранятся на этом телефоне и в резервную копию не входят. Оригиналы бумажных документов лучше тоже сохранить.</div>';
+  h+='<div class="hint">Файлы документов хранятся на телефоне'+(SYN.hh?' и в общем журнале на сервере':' и в резервную копию не входят')+'. Оригиналы бумажных документов лучше тоже сохранить.</div>';
   return h;
 }
 function docForm(d){
   var isNew=!d,files=[];
   d=d||{id:"",kind:"lab",title:"",date:today(),cats:ui.sel!=="all"?[ui.sel]:S.cats.map(function(k){return k.id}),note:""};
-  var kind=d.kind,sel={};d.cats.forEach(function(x){sel[x]=1});
+  var kind=d.kind,sel={},hasFile=!!(d.a&&urlCache[d.a]);d.cats.forEach(function(x){sel[x]=1});
   var kinds=DKINDS.map(function(k){return'<button class="ty'+(k[0]===kind?" on":"")+'" data-dkk="'+k[0]+'"><span class="e">'+k[2]+'</span>'+k[1]+'</button>'}).join("");
   var chips=S.cats.map(function(k){return'<button class="ty'+(sel[k.id]?" on":"")+'" data-pc="'+k.id+'"><span class="e"><span class="pcav" style="'+faceStyle(k)+'">'+face(k)+'</span></span>'+esc(k.name)+'</button>'}).join("");
-  openModal('<h3>'+(isNew?"Новый документ":"Документ")+'</h3>'+
-    (isNew?'<button class="filepick" data-pick><span>📎</span><b id="fpn">Выбрать файл</b><small>PDF или фото, можно несколько</small></button><input type="file" id="dfi" multiple accept="application/pdf,image/*" hidden>':
-      '<div class="viewer">'+(isImg(d)?'<img src="'+esc(urlCache[d.a])+'" alt="">':'<div class="pdfbig"><span class="pdf">'+(/pdf/.test(d.mime||"")?"PDF":"FILE")+'</span><b>'+esc(d.name||"Файл")+'</b><small>'+fsize(d.size||0)+'</small></div>')+'</div>'+
-      '<div class="actions" style="margin-top:10px"><a class="btn" href="'+esc(urlCache[d.a])+'" target="_blank" rel="noopener">Открыть</a><button class="btn" data-share>Поделиться</button></div>')+
+  var top='';
+  if(isNew)top='<button class="filepick" data-pick><span>📎</span><b id="fpn">Выбрать файл</b><small>PDF или фото, можно несколько. Для анализов файл можно не добавлять, а сразу выписать показатели.</small></button><input type="file" id="dfi" multiple accept="application/pdf,image/*" hidden>';
+  else if(hasFile)top='<div class="viewer">'+(isImg(d)?'<img src="'+esc(urlCache[d.a])+'" alt="">':'<div class="pdfbig"><span class="pdf">'+(/pdf/.test(d.mime||"")?"PDF":"FILE")+'</span><b>'+esc(d.name||"Файл")+'</b><small>'+fsize(d.size||0)+'</small></div>')+'</div>'+
+      '<div class="actions" style="margin-top:10px"><a class="btn" href="'+esc(urlCache[d.a])+'" target="_blank" rel="noopener">Открыть</a><button class="btn" data-share>Поделиться</button></div>';
+  else top=(readOnly?'':'<button class="filepick" data-attach><span>📎</span><b>Прикрепить файл</b><small>Фото или PDF бланка</small></button><input type="file" id="dfa" accept="application/pdf,image/*" hidden>');
+  var labs='';
+  if(!isNew&&(d.kind==="lab"||(d.labs&&d.labs.length))){
+    var n=(d.labs||[]).length,o=labOut(d);
+    labs='<div class="lab-h"><b>Показатели</b>'+(n?'<span class="hint" style="margin:0">'+n+(o?' · <em class="out-n">'+o+' вне нормы</em>':' · всё в норме')+'</span>':'')+(readOnly?'':'<button class="btn sm" data-labs>✏️ '+(n?"Изменить":"Выписать")+'</button>')+'</div>'+(n?labTable(d)+'<p class="hint">Нажмите на показатель, чтобы увидеть его историю. Нормы — с бланка лаборатории.</p>':'<p class="hint">Перепишите сюда значения с бланка: название, число, единицу и норму. Потом по каждому показателю будет видна история.</p>');
+  }
+  openModal('<h3>'+(isNew?"Новый документ":esc(d.title||dkind(d.kind)[1]))+'</h3>'+top+labs+
     '<label class="fl">Что это</label><div class="types">'+kinds+'</div>'+
     '<label class="fl">Название</label><input class="in" id="dt" value="'+esc(d.title)+'" placeholder="Например: Общий анализ крови">'+
     '<label class="fl">Дата документа</label><input class="in" type="date" id="dd" value="'+esc(d.date)+'">'+
     '<label class="fl">Чей</label><div class="types">'+chips+'</div>'+
-    '<label class="fl">Заметка</label><textarea class="in" id="dno" placeholder="Что показал, что сказал врач…">'+esc(d.note)+'</textarea>'+
+    '<label class="fl">Заметка</label><textarea class="in" id="dno" placeholder="Клиника, что сказал врач…">'+esc(d.note)+'</textarea>'+
     '<div class="hint" id="derr" style="color:var(--red)"></div>'+
     '<div class="actions">'+(isNew?'':'<button class="btn danger" data-del>Удалить</button>')+'<span class="sp"></span><button class="btn" data-x>Отмена</button><button class="btn pri" data-ok>Сохранить</button></div>',
   function(m){
@@ -1036,24 +1182,31 @@ function docForm(d){
     m.querySelectorAll("[data-dkk]").forEach(function(b){b.onclick=function(){kind=b.dataset.dkk;m.querySelectorAll("[data-dkk]").forEach(function(z){z.classList.toggle("on",z===b)})}});
     m.querySelectorAll("[data-pc]").forEach(function(b){b.onclick=function(){var id=b.dataset.pc;if(sel[id])delete sel[id];else sel[id]=1;b.classList.toggle("on",!!sel[id])}});
     m.querySelector("[data-x]").onclick=closeModal;
+    m.addEventListener("click",function(ev){var b=ev.target.closest("[data-ind]");if(b)indHistory(b.dataset.ind,d.cats.length===1?d.cats[0]:"all")});
+    var lb=m.querySelector("[data-labs]");if(lb)lb.onclick=function(){closeModal();labEditor(d)};
     if(isNew){var fi=m.querySelector("#dfi");m.querySelector("[data-pick]").onclick=function(){fi.click()};
       fi.onchange=function(){files=Array.prototype.slice.call(fi.files||[]);m.querySelector("#fpn").textContent=files.length?(files.length===1?files[0].name:files.length+" файла(ов) выбрано"):"Выбрать файл";
         if(files.length===1&&!m.querySelector("#dt").value)m.querySelector("#dt").value=files[0].name.replace(/\.[^.]+$/,"")}}
+    var at=m.querySelector("[data-attach]");if(at){var fa=m.querySelector("#dfa");at.onclick=function(){fa.click()};fa.onchange=function(){var f=fa.files&&fa.files[0];if(!f)return;m.dataset.lock="1";at.querySelector("b").textContent="Сохраняю…";
+      assets.upload(f).then(function(r){d.a=r.id;d.name=f.name;d.mime=f.type;d.size=f.size;m.dataset.lock="";closeModal();commit();setTimeout(function(){docForm(d)},300)},function(){m.dataset.lock="";err.textContent="Не удалось сохранить файл."})}}
     var sh=m.querySelector("[data-share]");if(sh)sh.onclick=function(){
       idbGet("photos",d.a).then(function(b){try{var f=new File([b],d.name||"document",{type:d.mime||b.type});if(navigator.canShare&&navigator.canShare({files:[f]}))return navigator.share({files:[f],title:d.title||d.name});err.textContent="Поделиться не получилось: используйте «Открыть»."}catch(e){err.textContent="Поделиться не получилось: используйте «Открыть»."}}).catch(function(){})};
-    var dl=m.querySelector("[data-del]");if(dl)dl.onclick=function(){closeModal();ask("Удалить документ насовсем?","Удалить",function(){S.docs=S.docs.filter(function(x){return x.id!==d.id});assets.delete(d.a).catch(function(){});commit()})};
+    var dl=m.querySelector("[data-del]");if(dl)dl.onclick=function(){closeModal();ask("Удалить документ насовсем?","Удалить",function(){S.docs=S.docs.filter(function(x){return x.id!==d.id});if(d.a)assets.delete(d.a).catch(function(){});commit()})};
     m.querySelector("[data-ok]").onclick=function(){
       var cats=S.cats.map(function(k){return k.id}).filter(function(id){return sel[id]}),date=m.querySelector("#dd").value,title=m.querySelector("#dt").value.trim(),note=m.querySelector("#dno").value.trim();
       if(!cats.length){err.textContent="Отметьте, чей это документ.";return}
       if(!date){err.textContent="Укажите дату.";return}
       if(!isNew){d.kind=kind;d.title=title;d.date=date;d.cats=cats;d.note=note;closeModal();commit();return}
-      if(!files.length){err.textContent="Сначала выберите файл.";return}
+      S.docs=S.docs||[];
+      if(!files.length){
+        if(kind!=="lab"){err.textContent="Сначала выберите файл.";return}
+        var nd={id:uid(),kind:kind,title:title||"Анализы",date:date,cats:cats.slice(),note:note,labs:[],t:Date.now()};S.docs.push(nd);closeModal();ui.view="docs";commit();setTimeout(function(){labEditor(nd)},300);return}
       m.dataset.lock="1";var ok=m.querySelector("[data-ok]");ok.textContent="Сохраняю…";ok.disabled=true;
-      S.docs=S.docs||[];var i=0;
+      var i=0;
       (function next(){
         if(i>=files.length){m.dataset.lock="";closeModal();ui.view="docs";commit();return}
         var f=files[i++];
-        assets.upload(f).then(function(r){S.docs.push({id:uid(),a:r.id,name:f.name,mime:f.type,size:f.size,kind:kind,title:files.length>1?(title?title+" ("+i+")":f.name.replace(/\.[^.]+$/,"")):title,date:date,cats:cats.slice(),note:note,t:Date.now()});next()},function(){err.textContent="Не удалось сохранить «"+f.name+"». Возможно, на телефоне мало места.";next()});
+        assets.upload(f).then(function(r){S.docs.push({id:uid(),a:r.id,name:f.name,mime:f.type,size:f.size,kind:kind,title:files.length>1?(title?title+" ("+i+")":f.name.replace(/\.[^.]+$/,"")):title,date:date,cats:cats.slice(),note:note,labs:kind==="lab"?[]:undefined,t:Date.now()});next()},function(){err.textContent="Не удалось сохранить «"+f.name+"». Возможно, на телефоне мало места.";next()});
       })();
     };
   });
@@ -1475,20 +1628,32 @@ function mergeImport(d){
       r.added++;
     });
   });
+  r.docs=0;r.docSkipped=0;
+  var jobs=(d.docs||[]).map(function(id){return function(){
+    var cats=[].concat(id.cats||[]).map(function(n){return(findCat(n)||{}).id}).filter(Boolean);if(!cats.length||!id.date)return Promise.resolve();
+    S.docs=S.docs||[];
+    if(S.docs.some(function(x){return x.date===id.date&&(x.title||"")===(id.title||"")&&x.cats.join()===cats.join()})){r.docSkipped++;return Promise.resolve()}
+    var nd={id:uid(),kind:id.kind||"lab",title:id.title||"",date:id.date,cats:cats,note:id.note||"",labs:Array.isArray(id.labs)?id.labs:undefined,t:Date.now()};
+    var p=Promise.resolve();
+    if(id.file&&id.file.b64){var bin=atob(id.file.b64),a=new Uint8Array(bin.length);for(var q=0;q<bin.length;q++)a[q]=bin.charCodeAt(q);var b=new Blob([a],{type:id.file.mime||"application/octet-stream"});
+      p=assets.upload(b).then(function(res){nd.a=res.id;nd.name=id.file.name||"document";nd.mime=b.type;nd.size=b.size})}
+    return p.then(function(){S.docs.push(nd);r.docs++},function(){S.docs.push(nd);r.docs++});
+  }});
+  r.wait=jobs.reduce(function(pr,f){return pr.then(f)},Promise.resolve());
   return r;
 }
 function applyBackup(d){
   if(!d||!Array.isArray(d.cats)||!Array.isArray(d.entries))throw 0;
   var ph=Array.isArray(d.photos)?d.photos:[],keep=ph.filter(function(p){return urlCache[p.a]}),lost=ph.length-keep.length;
-  d.photos=keep;var dk=Array.isArray(d.docs)?d.docs:[];d.docs=dk.filter(function(x){return urlCache[x.a]});lost+=dk.length-d.docs.length;d.courses=Array.isArray(d.courses)?d.courses:[];S=d;ui.sel="all";return lost;
+  d.photos=keep;var dk=Array.isArray(d.docs)?d.docs:[];d.docs=dk.filter(function(x){return!x.a||urlCache[x.a]});lost+=dk.length-d.docs.length;d.courses=Array.isArray(d.courses)?d.courses:[];S=d;ui.sel="all";return lost;
 }
 function restore(){
   openModal('<h3>Перенести данные</h3><p class="hint" style="margin:0 0 12px">Вставьте текст резервной копии или выберите файл. Резервная копия заменит всё, что есть сейчас. Файл импорта, который готовит Claude, только добавит новые записи и ничего не удалит.'+(SYN.hh?' Журнал общий: изменения увидят все участники.':'')+'</p><textarea class="in" id="rs" style="min-height:140px;font-size:12px" placeholder="Вставьте текст копии"></textarea><input type="file" accept=".json,application/json,text/plain" id="rf" hidden><div class="hint" id="rerr" style="color:var(--red)"></div><div class="actions"><button class="btn" data-file>Из файла</button><span class="sp"></span><button class="btn" data-x>Отмена</button><button class="btn pri" data-ok>Перенести</button></div>',function(m){
     var err=m.querySelector("#rerr");
     function done(txt){
       var d;try{d=JSON.parse(txt)}catch(e){err.textContent="Это не похоже на копию журнала. Проверьте, что текст вставлен целиком.";return}
-      if(d&&d.kind==="cat-journal-import"){var r=mergeImport(d);ui.sel="all";closeModal();commit();
-        setTimeout(function(){openModal('<h3>Готово ✓</h3><p class="hint" style="margin:0">'+(d.replaceEntries?'Старые записи удалены ('+r.removed+'). Котики, аватарки и фото остались. ':'')+'Новых записей: '+r.added+'.'+(r.skipped?' Пропущено, потому что уже были: '+r.skipped+'.':'')+(r.upd?' Обновлены даты в карточках котов.':'')+(r.newCats?' Новых котов: '+r.newCats+'.':'')+(d.replaceEntries?'':' Всё, что было в журнале раньше, осталось на месте.')+'</p><div class="actions"><span class="sp"></span><button class="btn pri" data-x>Отлично</button></div>',function(m2){m2.querySelector("[data-x]").onclick=closeModal})},300);return}
+      if(d&&d.kind==="cat-journal-import"){var r=mergeImport(d);r.wait.then(function(){ui.sel="all";if(r.docs&&!r.added){ui.view="docs"}closeModal();commit();
+        setTimeout(function(){openModal('<h3>Готово ✓</h3><p class="hint" style="margin:0">'+(d.replaceEntries?'Старые записи удалены ('+r.removed+'). Котики, аватарки и фото остались. ':'')+''+(r.added||!r.docs?'Новых записей: '+r.added+'.':'')+(r.skipped?' Пропущено, потому что уже были: '+r.skipped+'.':'')+(r.upd?' Обновлены даты в карточках котов.':'')+(r.newCats?' Новых котов: '+r.newCats+'.':'')+(r.docs?' Документов: '+r.docs+'.':'')+(r.docSkipped?' Документов пропущено (уже были): '+r.docSkipped+'.':'')+(d.replaceEntries?'':' Всё, что было в журнале раньше, осталось на месте.')+'</p><div class="actions"><span class="sp"></span><button class="btn pri" data-x>Отлично</button></div>',function(m2){m2.querySelector("[data-x]").onclick=closeModal})},300)});return}
       try{var lost=applyBackup(d);closeModal();commit();
         if(lost)setTimeout(function(){openModal('<h3>Готово ✓</h3><p class="hint" style="margin:0">Записи и аватарки перенесены. '+lost+' '+plural(lost,["фото","фото","фото"])+' из фотоленты нужно добавить заново: они лежали в старом журнале и в копию не входят.</p><div class="actions"><span class="sp"></span><button class="btn pri" data-x>Понятно</button></div>',function(m2){m2.querySelector("[data-x]").onclick=closeModal})},300)}
       catch(e){err.textContent="Это не похоже на копию журнала. Проверьте, что текст вставлен целиком."}
@@ -1503,12 +1668,13 @@ function restore(){
 
 /* ---------- клики ---------- */
 document.addEventListener("click",function(ev){
-  var t=ev.target.closest("[data-sel],[data-view],[data-filter],[data-act],[data-edit],[data-repeat],[data-ph],[data-mark],[data-course],[data-doc],[data-dk],[data-wr],[data-sy]");
+  var t=ev.target.closest("[data-sel],[data-view],[data-filter],[data-act],[data-edit],[data-repeat],[data-ph],[data-mark],[data-course],[data-doc],[data-dk],[data-wr],[data-sy],[data-ind]");
   if(!t||t.closest(".modal"))return;
   if(t.dataset.sel){ui.sel=t.dataset.sel;keepUI();render();window.scrollTo(0,0);return}
   if(t.dataset.view){ui.view=t.dataset.view;ui.menu=false;keepUI();render();window.scrollTo(0,0);return}
   if(t.dataset.act==="menu"){ui.menu=true;render();return}
   if(t.dataset.act==="menuclose"){ui.menu=false;render();return}
+  if(t.dataset.ind){indHistory(t.dataset.ind,ui.sel);return}
   if(t.dataset.sy){syncAction(t.dataset.sy);return}
   if(t.dataset.wr){ui.wr=t.dataset.wr;keepUI();render();return}
   if(t.dataset.act==="wbig")return weightBig(t.dataset.id);

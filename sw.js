@@ -1,7 +1,7 @@
 /* Кошачий журнал — работа без интернета.
    При обновлении приложения меняйте номер версии ниже. */
-const V = "cj-v1";
-const SHELL = ["./", "./index.html", "./manifest.webmanifest", "./icon-192.png", "./icon-512.png", "./apple-touch-icon.png"];
+const V = "cj-v2";
+const SHELL = ["./", "./index.html", "./manifest.webmanifest", "./icon-192.png", "./icon-512.png", "./apple-touch-icon.png", "./supabase.js"];
 
 self.addEventListener("install", (e) => {
   e.waitUntil(caches.open(V).then((c) => c.addAll(SHELL)));

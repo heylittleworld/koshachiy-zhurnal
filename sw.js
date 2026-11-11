@@ -1,6 +1,6 @@
 /* Кошачий журнал — работа без интернета.
    При обновлении приложения меняйте номер версии ниже. */
-const V = "cj-v2";
+const V = "cj-v3";
 const SHELL = ["./", "./index.html", "./manifest.webmanifest", "./icon-192.png", "./icon-512.png", "./apple-touch-icon.png", "./supabase.js"];
 
 self.addEventListener("install", (e) => {
@@ -23,7 +23,7 @@ self.addEventListener("fetch", (e) => {
   // Сама страница: сначала сеть (чтобы получать обновления), без сети — из кэша
   if (req.mode === "navigate") {
     e.respondWith(
-      fetch(req)
+      fetch(req, { cache: "no-store" })
         .then((res) => {
           const copy = res.clone();
           caches.open(V).then((c) => c.put("./index.html", copy));
